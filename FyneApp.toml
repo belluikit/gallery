@@ -1,0 +1,9 @@
+[Details]
+  Icon = "Icon.png"
+  Name = "MD3 Gallery"
+  ID = "io.fyne.md3gallery"
+  Version = "1.0.0"
+  Build = 13
+
+[Migrations]
+  fyneDo = true
