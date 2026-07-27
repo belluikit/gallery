@@ -335,10 +335,13 @@ func FycoderPage(_ bellui.Window) core.CanvasObject {
 	// Editor.
 	editor := xeditor.NewEditor()
 	editor.Highlighter = newFycoderHighlighter()
-	// Composite gutter: line numbers, Phase 5 fold chevrons, then Phase 3
-	// diagnostic markers, then breakpoints. Column-aware tap routing (#95) keeps
-	// the interactive columns from interfering — a tap folds, reveals, or toggles,
-	// never several at once.
+	// Composite gutter: line numbers, Phase 5 fold chevrons, Phase 3 diagnostic
+	// markers and breakpoints. The order here is NOT the rendered order — since
+	// bellui v1.0.0-rc.3 the composite arranges providers by the column each one
+	// declares (belluikit/bellui#30), so this draws as
+	// [diagnostics, breakpoints][line numbers][fold], keeping the numbers beside
+	// the code. Column-aware tap routing (#95) keeps the interactive columns from
+	// interfering — a tap folds, reveals, or toggles, never several at once.
 	editor.Gutter = xeditor.NewCompositeGutter(
 		xeditor.NewLineNumberGutter(),
 		editor.FoldGutter(),
