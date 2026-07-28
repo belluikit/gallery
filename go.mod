@@ -3,7 +3,7 @@ module github.com/belluikit/gallery
 go 1.26.2
 
 require (
-	github.com/belluikit/bellui v1.0.0-rc.3
+	github.com/belluikit/bellui v1.0.0-rc.4
 	github.com/trendvidia/clair v0.0.0-20260610093538-52f6b4c369c5
 )
 
@@ -28,9 +28,9 @@ require (
 
 require (
 	github.com/RoaringBitmap/roaring/v2 v2.4.5 // indirect
-	github.com/belluikit/bellui/x/charts v1.0.0-rc.3
-	github.com/belluikit/bellui/x/editor v1.0.0-rc.3
-	github.com/belluikit/bellui/x/tables v1.0.0-rc.3
+	github.com/belluikit/bellui/x/charts v1.0.0-rc.4
+	github.com/belluikit/bellui/x/editor v1.0.0-rc.4
+	github.com/belluikit/bellui/x/tables v1.0.0-rc.4
 	github.com/bits-and-blooms/bitset v1.22.0 // indirect
 	github.com/blevesearch/bleve/v2 v2.5.7 // indirect
 	github.com/blevesearch/bleve_index_api v1.2.11 // indirect
