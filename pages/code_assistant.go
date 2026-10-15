@@ -24,9 +24,9 @@ import (
 	"github.com/belluikit/bellui/theme"
 	"github.com/belluikit/bellui/widget"
 
-	"github.com/trendvidia/clair/assistant"
-	"github.com/trendvidia/clair/llm"
-	"github.com/trendvidia/clair/llm/anthropic"
+	"github.com/belluikit/clair/assistant"
+	"github.com/belluikit/clair/llm"
+	"github.com/belluikit/clair/llm/anthropic"
 )
 
 const (
