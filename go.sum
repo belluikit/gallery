@@ -4,13 +4,13 @@ github.com/Microsoft/go-winio v0.6.2 h1:F2VQgta7ecxGYO8k3ZZz3RS8fVIXVxONVUPlNERo
 github.com/Microsoft/go-winio v0.6.2/go.mod h1:yd8OoFMLzJbo9gZq8j5qaps8bJ9aShtEA8Ipt1oGCvU=
 github.com/RoaringBitmap/roaring/v2 v2.4.5 h1:uGrrMreGjvAtTBobc0g5IrW1D5ldxDQYe2JW2gggRdg=
 github.com/RoaringBitmap/roaring/v2 v2.4.5/go.mod h1:FiJcsfkGje/nZBZgCu0ZxCPOKD/hVXDS2dXi7/eUFE0=
-github.com/belluikit/bellui v1.0.0 h1:dz9UPCJFx6LFdmXHU1liIBnH5FrU4ERC1k+vRCIq/Tw=
+github.com/belluikit/bellui v1.0.0 h1:3YEUPaLio69nAn2B0ZvZpYwm9oTv+2DN20ucwOZTyhQ=
 github.com/belluikit/bellui v1.0.0/go.mod h1:RsqpCASpYNtDEtfw/UKuVion/AEnCrxEc+AqpAmKKJo=
-github.com/belluikit/bellui/x/charts v1.0.0 h1:CedwrzEG29LLOtqTOSaae2gbNMTiSm1uNOhjICVg1YA=
+github.com/belluikit/bellui/x/charts v1.0.0 h1:cxFER7xb6oVgiotK9BwJSedVeTvT/h0u+uYP4gO3Wz0=
 github.com/belluikit/bellui/x/charts v1.0.0/go.mod h1:l1KyK7Jqxpg0P6l/KzfUjUXWT5vcuQ3FL/FL+kLY/EI=
-github.com/belluikit/bellui/x/editor v1.0.0 h1:a9RzSYheh7ruveukFCcF9/zXRoImQNiotHhl23x3DWg=
+github.com/belluikit/bellui/x/editor v1.0.0 h1:jfZUJldLKHLH9cSIwJtszNfpVhBJyWgzIm5jK1VZzH0=
 github.com/belluikit/bellui/x/editor v1.0.0/go.mod h1:jRg1xhbu7ymA5pqGFfmyOEh03sEmp4JsctuT8CRWul0=
-github.com/belluikit/bellui/x/tables v1.0.0 h1:FuiAsKOweoMuq/y5jWRXLYUV/yuB2up6Fv72JcM5x5k=
+github.com/belluikit/bellui/x/tables v1.0.0 h1:5uw2dMoISk0P3Vcn1eWU0ZswLUPwo3Ss6IVTHoNUpb0=
 github.com/belluikit/bellui/x/tables v1.0.0/go.mod h1:qDi4v8guXE2yjNFsiJIGIXgC1V3y/bw11uZBMrRuhgg=
 github.com/belluikit/fsnotify v1.9.1 h1:Tgp4GeFmk5vqo3AlQfYHvEnbdBo8L5MTaoGqBiJvr6g=
 github.com/belluikit/fsnotify v1.9.1/go.mod h1:Eerjau1+jB7zBYpe753/iAfJd4kWDaGL2DsQH1pqK5c=
