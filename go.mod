@@ -4,6 +4,8 @@ go 1.26.2
 
 require (
 	github.com/belluikit/bellui v1.0.0
+	github.com/belluikit/bellui/x/dag v1.0.0
+	github.com/belluikit/bellui/x/mmedia v1.0.0
 	github.com/belluikit/clair v0.0.0-20261015102354-bff8df2d4219
 	github.com/belluikit/uploader v0.1.0
 )
@@ -14,6 +16,18 @@ require (
 	github.com/belluikit/gl-js v0.2.1 // indirect
 	github.com/belluikit/glfw v1.10.0 // indirect
 	github.com/belluikit/glfw-js v1.0.4 // indirect
+	github.com/belluikit/goffmpeg v0.4.1 // indirect
+	github.com/belluikit/goffmpeg-libs/android_amd64 v0.3.1 // indirect
+	github.com/belluikit/goffmpeg-libs/android_arm v0.3.1 // indirect
+	github.com/belluikit/goffmpeg-libs/android_arm64 v0.3.1 // indirect
+	github.com/belluikit/goffmpeg-libs/darwin_amd64 v0.3.1 // indirect
+	github.com/belluikit/goffmpeg-libs/darwin_arm64 v0.3.1 // indirect
+	github.com/belluikit/goffmpeg-libs/ios_arm64 v0.3.1 // indirect
+	github.com/belluikit/goffmpeg-libs/iossimulator_arm64 v0.3.1 // indirect
+	github.com/belluikit/goffmpeg-libs/linux_amd64 v0.3.1 // indirect
+	github.com/belluikit/goffmpeg-libs/linux_arm64 v0.3.1 // indirect
+	github.com/belluikit/goffmpeg-libs/windows_amd64 v0.3.1 // indirect
+	github.com/belluikit/goffmpeg-libs/windows_arm64 v0.3.1 // indirect
 	github.com/belluikit/systray v1.12.0 // indirect
 	github.com/belluikit/typesetting v0.3.6 // indirect
 	github.com/belluikit/webgpu v1.2.0 // indirect
@@ -22,6 +36,8 @@ require (
 	github.com/belluikit/webgpu/libs-ios v0.0.0-20260727093643-fcde44a448a6 // indirect
 	github.com/belluikit/webgpu/libs-linux v0.0.0-20260731101015-884076933a5d // indirect
 	github.com/belluikit/webgpu/libs-windows v0.0.0-20260727093645-6b8e55d25f27 // indirect
+	github.com/ebitengine/oto/v3 v3.4.0 // indirect
+	github.com/ebitengine/purego v0.10.0 // indirect
 	github.com/go-gl/glfw/v3.4/glfw v0.1.0-pre.1.0.20260628091122-0bd588dc30cf // indirect
 	github.com/trendvidia/protowire-go v1.2.2 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260217215200-42d3e9bedb6d // indirect
