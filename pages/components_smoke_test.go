@@ -26,6 +26,7 @@ func TestComponentPagesConstruct(t *testing.T) {
 		"Data Grid":     pages.FytablesPage,
 		"File Transfer": pages.UploaderPage,
 		"Theme":         pages.ThemePage,
+		"DAG Editor":    pages.DAGEditorPage,
 	}
 
 	for name, page := range componentPages {

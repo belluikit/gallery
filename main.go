@@ -27,6 +27,7 @@ func corePages() []pages.PageDef {
 		{Name: "Code Editor", Icon: theme.DocumentCreateIcon(), New: pages.FycoderPage, Fill: true},
 		{Name: "Communication", Icon: theme.InfoIcon(), New: pages.CommunicationPage},
 		{Name: "Containment", Icon: theme.ContentCopyIcon(), New: pages.ContainmentPage},
+		{Name: "DAG Editor", Icon: theme.ViewFullScreenIcon(), New: pages.DAGEditorPage, Fill: true},
 		{Name: "Data Grid", Icon: theme.GridIcon(), New: pages.FytablesPage},
 		{Name: "File Transfer", Icon: theme.UploadIcon(), New: pages.UploaderPage},
 		{Name: "File Tree", Icon: theme.FolderOpenIcon(), New: pages.FileTreePage, Fill: true},
@@ -82,6 +83,7 @@ func main() {
 	current := 0
 	pageSlot := container.NewStack()
 	setPage := func() {
+		pages.LeavePage() // stop whatever the previous page left running
 		page := registry[current].New(w)
 		if registry[current].Fill {
 			pageSlot.Objects = []core.CanvasObject{page}
