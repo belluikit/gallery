@@ -3,16 +3,16 @@ module github.com/belluikit/gallery
 go 1.26.2
 
 require (
-	github.com/belluikit/bellui v1.0.0
-	github.com/belluikit/bellui/x/dag v1.0.0
-	github.com/belluikit/bellui/x/mmedia v1.0.0
+	github.com/belluikit/bellui v1.1.1
+	github.com/belluikit/bellui/x/dag v1.1.1
+	github.com/belluikit/bellui/x/mmedia v1.1.1
 	github.com/belluikit/clair v0.0.0-20261015102354-bff8df2d4219
 	github.com/belluikit/uploader v0.1.0
 )
 
 require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
-	github.com/belluikit/fsnotify v1.9.1 // indirect
+	github.com/belluikit/fsnotify v1.10.2 // indirect
 	github.com/belluikit/gl-js v0.2.1 // indirect
 	github.com/belluikit/glfw v1.10.0 // indirect
 	github.com/belluikit/glfw-js v1.0.4 // indirect
@@ -28,7 +28,7 @@ require (
 	github.com/belluikit/goffmpeg-libs/linux_arm64 v0.3.1 // indirect
 	github.com/belluikit/goffmpeg-libs/windows_amd64 v0.3.1 // indirect
 	github.com/belluikit/goffmpeg-libs/windows_arm64 v0.3.1 // indirect
-	github.com/belluikit/systray v1.12.0 // indirect
+	github.com/belluikit/systray v1.12.1 // indirect
 	github.com/belluikit/typesetting v0.3.6 // indirect
 	github.com/belluikit/webgpu v1.2.0 // indirect
 	github.com/belluikit/webgpu/libs-android v0.0.0-20260731101013-82e3bdc8353b // indirect
@@ -46,9 +46,9 @@ require (
 
 require (
 	github.com/RoaringBitmap/roaring/v2 v2.4.5 // indirect
-	github.com/belluikit/bellui/x/charts v1.0.0
-	github.com/belluikit/bellui/x/editor v1.0.0
-	github.com/belluikit/bellui/x/tables v1.0.0
+	github.com/belluikit/bellui/x/charts v1.1.1
+	github.com/belluikit/bellui/x/editor v1.1.1
+	github.com/belluikit/bellui/x/tables v1.1.1
 	github.com/bits-and-blooms/bitset v1.22.0 // indirect
 	github.com/blevesearch/bleve/v2 v2.5.7 // indirect
 	github.com/blevesearch/bleve_index_api v1.2.11 // indirect
