@@ -44,11 +44,13 @@ Some pages need something outside the app to do anything useful:
 
 ## Android
 
-`scripts/android-build.sh` packages an arm64 APK, repacks it so Android 14+
-accepts it (`resources.arsc` stored and aligned), signs it with the debug key,
-and with `--install` installs and launches it through `adb`. It expects the
-`fyne` packager on `PATH`, the Android SDK in `$ANDROID_HOME` (default `~/Library/Android/sdk`) with
-build-tools 34.0.0, and an NDK in `$ANDROID_NDK_HOME`.
+`scripts/android-build.sh` packages an arm64 APK, repacks it so Android 11+
+(API 30) accepts it (`resources.arsc` stored and aligned), signs it with the
+debug key, and with `--install` installs and launches it through `adb`. It
+expects the `bellui` command on `PATH`
+(`go install github.com/belluikit/bellui/cmd/bellui@latest`), the Android SDK
+in `$ANDROID_HOME` (default `~/Library/Android/sdk`) with build-tools 34.0.0,
+and an NDK in `$ANDROID_NDK_HOME`.
 
 ```sh
 scripts/android-build.sh [--install]

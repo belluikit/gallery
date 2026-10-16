@@ -7,8 +7,12 @@
 #   * The host shell exports CGO_CFLAGS/CGO_LDFLAGS pointing at Homebrew with a
 #     macOS-only linker flag (-Wl,-no_warn_duplicate_libraries) that ld.lld
 #     rejects when cross-linking for Android — so we clear them for the build.
-#   * The (deprecated) `fyne` packager stores resources.arsc compressed, which
-#     Android 14 (API 34) refuses to install; we repack it stored + aligned.
+#   * The packager stores resources.arsc compressed, which Android 11+ (API 30)
+#     refuses to install; we repack it stored + aligned.
+#
+# Needs the bellui command on PATH:
+#   go install github.com/belluikit/bellui/cmd/bellui@latest
+# The migrated_belluido build tag comes from manifest.pxf (migrations.belluiDo).
 #
 # Usage: scripts/android-build.sh [--install]
 set -euo pipefail
@@ -22,11 +26,11 @@ export ANDROID_HOME ANDROID_NDK_HOME
 BT="$ANDROID_HOME/build-tools/34.0.0"
 ADB="$ANDROID_HOME/platform-tools/adb"
 APK="MD3_Gallery.apk"
-APP_ID="io.fyne.md3gallery"
+APP_ID="io.bellui.md3gallery"
 ACTIVITY="org.golang.app.GoNativeActivity"
 
 echo ">> packaging $APK for android/arm64"
-env CGO_CFLAGS="" CGO_LDFLAGS="" fyne package -os android/arm64 --tags migrated_fynedo
+env CGO_CFLAGS="" CGO_LDFLAGS="" bellui package -os android/arm64
 
 echo ">> repacking (resources.arsc stored + aligned) and signing"
 STAGE="$(mktemp -d)"
