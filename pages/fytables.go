@@ -31,7 +31,7 @@ func FytablesPage(w bellui.Window) core.CanvasObject {
 		&container.TabItem{Text: "Pivot", Content: makePivotTab()},
 		&container.TabItem{Text: "Tree Data", Content: makeTreeTab()},
 		&container.TabItem{Text: "Editing", Content: makeEditingTab()},
-		&container.TabItem{Text: "10K Rows", Content: makeLargeDataTab()},
+		&container.TabItem{Text: "Large Data", Content: makeLargeDataTab()},
 	)
 
 	return pageMinSize(1000, 560, tabs)
@@ -422,13 +422,17 @@ func makeEditingTab() core.CanvasObject {
 	return container.NewBorder(top, nil, nil, nil, grid)
 }
 
-// ─── Tab 8: 10K Rows Performance ────────────────────────────────────────
+// ─── Tab 8: Large Data Performance ────────────────────────────────────────
 
 func makeLargeDataTab() core.CanvasObject {
-	// 10,000 rows: plenty to show virtual scrolling, and about 4 MB rather than
-	// the ~42 MB the 100,000-row sample cost every time the page opened (the
-	// web demo has far less memory to spare than a desktop).
+	// 10,000 rows (5,000 on phones and tablets): plenty to show virtual
+	// scrolling, at about 4 MB rather than the ~42 MB the 100,000-row sample
+	// cost every time the page opened. Phones, and phone browsers running the
+	// web demo, have far less memory to spare than a desktop.
 	n := 10000
+	if bellui.CurrentDevice().IsMobile() {
+		n = 5000
+	}
 	start := time.Now()
 	data := make([]map[string]any, n)
 	for i := range data {
