@@ -19,3 +19,22 @@ type PageDef struct {
 	// drags, breaking focus, gutter taps, and modifier-clicks.
 	Fill bool
 }
+
+// leaveHooks run when the user navigates away from the current page. Pages
+// that own something running in the background (a media player decoding
+// frames) register a hook with OnLeave to stop it; the gallery drops the old
+// page's widgets but cannot know what they started.
+var leaveHooks []func()
+
+// OnLeave registers fn to run when the current page is left.
+func OnLeave(fn func()) { leaveHooks = append(leaveHooks, fn) }
+
+// LeavePage runs and clears the hooks registered by the current page. main.go
+// calls it before building the next page.
+func LeavePage() {
+	hooks := leaveHooks
+	leaveHooks = nil
+	for _, fn := range hooks {
+		fn()
+	}
+}

@@ -23,19 +23,23 @@ and an About box. On desktop the Bellui dev inspector is enabled.
 ## Pages and platforms
 
 `main.go` registers the core pages, which build on every platform including
-Android and the web. Two more pages are appended by `pages.NativePages()`:
+Android and the web; among them the DAG Editor (`x/dag`). Three more pages are
+appended by `pages.NativePages()`:
 
 | Page | Desktop | Android | Web |
 | --- | --- | --- | --- |
 | Clair | yes | no | no |
 | Code Assistant | yes | no | no |
+| Media Player (`x/mmedia`, FFmpeg) | yes | no | no |
 
 The selection is done by build tags: `pages/native_desktop.go`,
-`pages/clair_demo.go` and `pages/code_assistant.go` carry
-`//go:build !android && !js`, and `pages/native_mobile.go`
-(`//go:build android || js`) returns no extra pages. Both pages keep their
-knowledge base in bleve, whose storage (bbolt, mmap-go) does not build for
-js/wasm.
+`pages/clair_demo.go`, `pages/code_assistant.go` and `pages/media_player.go`
+carry `//go:build !android && !js`, and `pages/native_mobile.go`
+(`//go:build android || js`) returns no extra pages. Clair and the Code
+Assistant keep their knowledge base in bleve, whose storage (bbolt, mmap-go) does not build for
+js/wasm; the Media Player links FFmpeg through goffmpeg (cgo). It plays a
+bundled six-second test video (`pages/media/sample.mp4`, made for the gallery)
+or any local file opened with "Open file…".
 
 Some pages need something outside the app to do anything useful:
 

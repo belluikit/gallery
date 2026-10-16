@@ -83,6 +83,7 @@ func main() {
 	current := 0
 	pageSlot := container.NewStack()
 	setPage := func() {
+		pages.LeavePage() // stop whatever the previous page left running
 		page := registry[current].New(w)
 		if registry[current].Fill {
 			pageSlot.Objects = []core.CanvasObject{page}
