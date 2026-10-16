@@ -1,6 +1,9 @@
 # Android build artifacts
 MD3_Gallery.apk
 
+# Web build output of `bellui serve` / `bellui package -os web`
+/wasm/
+
 # OS and editor files, Go test and profiling output
 .DS_Store
 Thumbs.db
