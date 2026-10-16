@@ -2,8 +2,8 @@ details {
   icon = "Icon.png"
   name = "MD3 Gallery"
   id = "io.bellui.md3gallery"
-  version = "1.0.0"
-  build = 13
+  version = "1.0.1"
+  build = 14
 }
 migrations = {
   belluiDo: true
