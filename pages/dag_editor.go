@@ -60,8 +60,11 @@ func DAGEditorPage(_ bellui.Window) core.CanvasObject {
 // dagRegistry lists the components the palette offers.
 func dagRegistry() *dag.Registry {
 	reg := dag.NewRegistry()
+	// One concrete stream type, so the palette's port summaries read
+	// "rows → rows" rather than the wildcard's "* → *", while every component
+	// still connects to every other.
 	port := func(name string, dir dag.PortDirection) dag.PortDef {
-		return dag.PortDef{Name: name, Direction: dir, Stream: dag.StreamType{Name: "*"}}
+		return dag.PortDef{Name: name, Direction: dir, Stream: dag.StreamType{Name: "rows"}}
 	}
 	for _, comp := range []*dag.Component{
 		{ID: "source", Name: "Source", Category: "Sources", Outputs: []dag.PortDef{port("out", dag.PortOutput)}},
