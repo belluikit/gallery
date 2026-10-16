@@ -1,4 +1,4 @@
-//go:build !android
+//go:build !android && !js
 
 // Excluded from Android builds: the assistant uses clair's knowledge base,
 // which links FAISS (go-faiss) for vector search — a host-only native

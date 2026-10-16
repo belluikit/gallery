@@ -1,9 +1,9 @@
-//go:build android
+//go:build android || js
 
 package pages
 
-// NativePages returns no extra destinations on Android. The Clair / Code
-// Assistant (FAISS) and Media Player (FFmpeg) pages link host-only native
-// libraries that aren't part of the mobile build, so they — and their heavy
-// dependencies — are excluded here. See native_desktop.go for the desktop set.
+// NativePages returns no extra destinations on Android and on the web. The
+// Clair and Code Assistant pages depend on bleve's on-disk storage (bbolt,
+// mmap-go), which does not build for js/wasm and is kept out of the Android
+// build. See native_desktop.go for the desktop set.
 func NativePages() []PageDef { return nil }

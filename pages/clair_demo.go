@@ -1,4 +1,4 @@
-//go:build !android
+//go:build !android && !js
 
 // Excluded from Android builds: clair's knowledge base links FAISS
 // (go-faiss, -lfaiss_c) for vector search, a host-only native library not
