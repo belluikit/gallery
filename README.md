@@ -23,16 +23,19 @@ and an About box. On desktop the Bellui dev inspector is enabled.
 ## Pages and platforms
 
 `main.go` registers the core pages, which build on every platform including
-Android. Two more pages are appended by `pages.NativePages()`:
+Android and the web. Two more pages are appended by `pages.NativePages()`:
 
-| Page | Desktop (`!android`) | Android |
-| --- | --- | --- |
-| Clair | yes | no |
-| Code Assistant | yes | no |
+| Page | Desktop | Android | Web |
+| --- | --- | --- | --- |
+| Clair | yes | no | no |
+| Code Assistant | yes | no | no |
 
-The selection is done by build tags: `pages/native_desktop.go` and
-`pages/clair_demo.go`, `pages/code_assistant.go` carry `//go:build !android`,
-and `pages/native_mobile.go` (`//go:build android`) returns no extra pages.
+The selection is done by build tags: `pages/native_desktop.go`,
+`pages/clair_demo.go` and `pages/code_assistant.go` carry
+`//go:build !android && !js`, and `pages/native_mobile.go`
+(`//go:build android || js`) returns no extra pages. Both pages keep their
+knowledge base in bleve, whose storage (bbolt, mmap-go) does not build for
+js/wasm.
 
 Some pages need something outside the app to do anything useful:
 
