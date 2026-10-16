@@ -44,7 +44,7 @@ func main() {
 	app.SetMetadata(bellui.AppMetadata{
 		ID:      "io.bellui.md3gallery",
 		Name:    "MD3 Gallery",
-		Version: "2.15.0",
+		Version: "1.0.0",
 		Icon:    theme.ColorPaletteIcon(),
 	})
 	a := app.NewWithID("io.bellui.md3gallery")
