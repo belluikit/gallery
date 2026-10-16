@@ -12,6 +12,8 @@ github.com/belluikit/bellui/x/editor v1.0.0 h1:jfZUJldLKHLH9cSIwJtszNfpVhBJyWgzI
 github.com/belluikit/bellui/x/editor v1.0.0/go.mod h1:jRg1xhbu7ymA5pqGFfmyOEh03sEmp4JsctuT8CRWul0=
 github.com/belluikit/bellui/x/tables v1.0.0 h1:5uw2dMoISk0P3Vcn1eWU0ZswLUPwo3Ss6IVTHoNUpb0=
 github.com/belluikit/bellui/x/tables v1.0.0/go.mod h1:qDi4v8guXE2yjNFsiJIGIXgC1V3y/bw11uZBMrRuhgg=
+github.com/belluikit/clair v0.0.0-20261015102354-bff8df2d4219 h1:DIiqE7kJuFh5q6bHG95vStIPwCAxwwj9uoaqHQwULXY=
+github.com/belluikit/clair v0.0.0-20261015102354-bff8df2d4219/go.mod h1:BK8vhAFFAn20dpZ7B3REW/GNagNXXH5zqmDP/ToGgQI=
 github.com/belluikit/fsnotify v1.9.1 h1:Tgp4GeFmk5vqo3AlQfYHvEnbdBo8L5MTaoGqBiJvr6g=
 github.com/belluikit/fsnotify v1.9.1/go.mod h1:Eerjau1+jB7zBYpe753/iAfJd4kWDaGL2DsQH1pqK5c=
 github.com/belluikit/gl-js v0.2.1 h1:DWtRW7ztetpAfztJ3msW9YWFWVaydmMlfT2sa6GrAEY=
@@ -24,6 +26,8 @@ github.com/belluikit/systray v1.12.0 h1:Hnjwerl6gMnmS1JXXaKkWbC9ZPY29UsQgUjktVvS
 github.com/belluikit/systray v1.12.0/go.mod h1:peb+/O80A/aXu5fUel0gSgeAsAVYz5x01SZF5mnyErU=
 github.com/belluikit/typesetting v0.3.6 h1:M27Rx+fhz1IV2n6Tei3fNhs/Oe9gGAnq3QMrBpAqisY=
 github.com/belluikit/typesetting v0.3.6/go.mod h1:vOvJAyUaoKpOpxqHeDglX6xNuG1zv2C3IOG3yEnHuLQ=
+github.com/belluikit/uploader v0.1.0 h1:R4b/AIPVTsk2CtfMoLZ+wCKYrBflE45I4LpnYQ3KmWQ=
+github.com/belluikit/uploader v0.1.0/go.mod h1:OhAFW8yyPmP3CMLld318BRYMn1qyLo1dDKR8ue/fHao=
 github.com/belluikit/webgpu v1.2.0 h1:JKzBgxelTB0/MJsXUbeHyDX/PJCcyu4lZXljvPNHcAA=
 github.com/belluikit/webgpu v1.2.0/go.mod h1:IH6esvULcllU5qyAAdCg+YQAmN4zGDhDv1ol2YtV7jM=
 github.com/belluikit/webgpu/libs-android v0.0.0-20260731101013-82e3bdc8353b h1:VfSbjwooB/L8QxcHIuGtIDFWVuV5rwAvVIlZGWWU70k=
@@ -144,12 +148,8 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
 github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
-github.com/trendvidia/clair v0.0.0-20260610093538-52f6b4c369c5 h1:RzTEcmp7VXokoWALg9bXwIGfVNSUpKAfPlrcRleMDMA=
-github.com/trendvidia/clair v0.0.0-20260610093538-52f6b4c369c5/go.mod h1:MSzTZE1KF4UB9gA1BRQxU6CLTPPFk3LKRVCgHVYeg9E=
 github.com/trendvidia/protowire-go v1.2.2 h1:e3WHWgQH4pVh43pSGNkIA3Ik7VB7HeDTMHxSotzCFps=
 github.com/trendvidia/protowire-go v1.2.2/go.mod h1:YIJF4pBDfBPCpntd+l/6NIuZ1CIuWM0dLa2s87gG2Gw=
-github.com/trendvidia/uploader v0.0.0-20260611093540-3c972174ade5 h1:Gct1nvGsfvmpKfNSUyR7sgnMiRk1iGM4QClNFNBBAGQ=
-github.com/trendvidia/uploader v0.0.0-20260611093540-3c972174ade5/go.mod h1:vAJgi0CE+n5yfm7Qhtt/GdDddYdLMfle23fhDRBsh7k=
 github.com/yuin/goldmark v1.8.5 h1:r6N5afV5qj/5S4UTch8agZHJ8UxNCMwX7WjkkJam2NA=
 github.com/yuin/goldmark v1.8.5/go.mod h1:ip/1k0VRfGynBgxOz0yCqHrbZXhcjxyuS66Brc7iBKg=
 go.etcd.io/bbolt v1.4.0 h1:TU77id3TnN/zKr7CO/uk+fBCwF2jGcMuw2B/FMAzYIk=

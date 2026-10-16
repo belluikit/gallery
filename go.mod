@@ -4,7 +4,8 @@ go 1.26.2
 
 require (
 	github.com/belluikit/bellui v1.0.0
-	github.com/trendvidia/clair v0.0.0-20260610093538-52f6b4c369c5
+	github.com/belluikit/clair v0.0.0-20261015102354-bff8df2d4219
+	github.com/belluikit/uploader v0.1.0
 )
 
 require (
@@ -68,7 +69,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rymdport/portal v0.4.2 // indirect
 	github.com/stretchr/testify v1.11.1 // indirect
-	github.com/trendvidia/uploader v0.0.0-20260611093540-3c972174ade5
 	github.com/yuin/goldmark v1.8.5 // indirect
 	go.etcd.io/bbolt v1.4.0 // indirect
 	golang.org/x/image v0.44.0 // indirect

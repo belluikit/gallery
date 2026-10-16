@@ -17,10 +17,10 @@ import (
 	"github.com/belluikit/bellui/theme"
 	"github.com/belluikit/bellui/widget"
 
-	"github.com/trendvidia/clair/assistant"
-	"github.com/trendvidia/clair/kb"
-	"github.com/trendvidia/clair/kb/builder"
-	"github.com/trendvidia/clair/parser/goparser"
+	"github.com/belluikit/clair/assistant"
+	"github.com/belluikit/clair/kb"
+	"github.com/belluikit/clair/kb/builder"
+	"github.com/belluikit/clair/parser/goparser"
 )
 
 // clairAssistant is lazily initialized on first use.

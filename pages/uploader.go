@@ -13,7 +13,7 @@ import (
 	"github.com/belluikit/bellui/dialog"
 	"github.com/belluikit/bellui/widget"
 
-	"github.com/trendvidia/uploader/sdk"
+	"github.com/belluikit/uploader/sdk"
 )
 
 // UploaderPage demonstrates file upload/download with progress using the
@@ -154,7 +154,7 @@ func UploaderPage(w bellui.Window) core.CanvasObject {
 			progressVal.Set(0)
 
 			go func() {
-				err := c.Download(
+				res, err := c.Download(
 					context.Background(), fid, destPath,
 					sdk.WithProgress(func(current, total int64) {
 						if total > 0 {
@@ -163,8 +163,12 @@ func UploaderPage(w bellui.Window) core.CanvasObject {
 					}),
 				)
 				if err != nil {
+					msg := fmt.Sprintf("Download failed: %v", err)
+					if res != nil && res.SessionID != "" {
+						msg += fmt.Sprintf(" (resume with session %s)", res.SessionID)
+					}
 					bellui.Do(func() {
-						statusText.Set(fmt.Sprintf("Download failed: %v", err))
+						statusText.Set(msg)
 					})
 					return
 				}
