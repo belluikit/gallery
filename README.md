@@ -20,6 +20,27 @@ go run .
 The top app bar has toggles for light/dark, dense theme, right-to-left layout
 and an About box. On desktop the Bellui dev inspector is enabled.
 
+### In a browser
+
+The gallery also runs as WebAssembly. Install the `bellui` command once, then
+serve the gallery from this folder:
+
+```sh
+go install github.com/belluikit/bellui/cmd/bellui@latest
+bellui serve
+```
+
+Open <http://localhost:8080> in a browser with WebGPU (Chrome or Edge;
+verified in Chromium). The first load downloads a large `.wasm` file (about
+64 MB uncompressed), so give it a moment. A few pages are desktop-only; the
+table below says which.
+
+To build static files for a web server instead, run
+`bellui package -os web --release` and copy the `wasm` folder it creates.
+WebGPU needs HTTPS (or `localhost`); see
+[Bellui on the web](https://bellui.com/docs/platforms/web/) for the WebGL
+alternative and other details.
+
 ## Pages and platforms
 
 `main.go` registers the core pages, which build on every platform including
