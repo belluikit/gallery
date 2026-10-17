@@ -905,8 +905,14 @@ func FychartsPage(_ bellui.Window) core.CanvasObject {
 			drawStatusLabel.Refresh()
 		}
 	}
+	// Six buttons a row are wider than a phone, which made the whole Charts
+	// page (every tab is as wide as the widest) wider than the screen.
+	toolCols := 6
+	if bellui.CurrentDevice().IsMobile() {
+		toolCols = 3
+	}
 	toolButtons := container.NewGridWithColumns(
-		6,
+		toolCols,
 		widget.NewButton("Select", setTool(interact.DrawingToolNone, "Select (click to select, drag to move)")),
 		widget.NewButton("H-Line", setTool(interact.DrawingToolHLine, "Horizontal Line")),
 		widget.NewButton("V-Line", setTool(interact.DrawingToolVLine, "Vertical Line")),
@@ -931,23 +937,29 @@ func FychartsPage(_ bellui.Window) core.CanvasObject {
 	)
 
 	// Tabbed layout — grouped by category, 2x2 grids per tab
+	// Two charts side by side are wider than a phone, and the page does not
+	// scroll sideways, so the right-hand column was unreachable there.
+	cols := 2
+	if bellui.CurrentDevice().IsMobile() {
+		cols = 1
+	}
 	tabs := container.NewAppTabs(
 		container.NewTabItem("Basic",
-			container.NewGridWithColumns(2, lineChart, stackedBarChart, scatterChart, pieChart)),
+			container.NewGridWithColumns(cols, lineChart, stackedBarChart, scatterChart, pieChart)),
 		container.NewTabItem("Financial",
-			container.NewGridWithColumns(2, candlestickChart, boxplotChart, heatmapChart, parallelChart)),
+			container.NewGridWithColumns(cols, candlestickChart, boxplotChart, heatmapChart, parallelChart)),
 		container.NewTabItem("Hierarchical",
-			container.NewGridWithColumns(2, treemapChart, sunburstChart, sankeyChart, treeChart)),
+			container.NewGridWithColumns(cols, treemapChart, sunburstChart, sankeyChart, treeChart)),
 		container.NewTabItem("Specialized",
-			container.NewGridWithColumns(2, radarChart, gaugeChart, funnelChart, graphChart)),
+			container.NewGridWithColumns(cols, radarChart, gaugeChart, funnelChart, graphChart)),
 		container.NewTabItem("Advanced",
-			container.NewGridWithColumns(2, pictorialChart, effectChart, customChart, builderChart)),
+			container.NewGridWithColumns(cols, pictorialChart, effectChart, customChart, builderChart)),
 		container.NewTabItem("Drilldown",
 			container.NewGridWithColumns(1, barChart)),
 		container.NewTabItem("3D",
-			container.NewGridWithColumns(2, bar3DChart, scatter3DChart, surfaceChart, line3DChart)),
+			container.NewGridWithColumns(cols, bar3DChart, scatter3DChart, surfaceChart, line3DChart)),
 		container.NewTabItem("Trading",
-			container.NewGridWithColumns(2, dashedChart, chartGroup, streamChart, drawChartWithTools)),
+			container.NewGridWithColumns(cols, dashedChart, chartGroup, streamChart, drawChartWithTools)),
 		container.NewTabItem("Geo",
 			container.NewBorder(
 				container.NewBorder(
@@ -956,7 +968,7 @@ func FychartsPage(_ bellui.Window) core.CanvasObject {
 					apiKeyEntry,
 				),
 				nil, nil, nil,
-				container.NewGridWithColumns(2, worldMap, choroplethMap),
+				container.NewGridWithColumns(cols, worldMap, choroplethMap),
 			)),
 	)
 	tabs.SetTabLocation(container.TabLocationTop)
