@@ -68,8 +68,10 @@ func dagRegistry() *dag.Registry {
 	}
 	for _, comp := range []*dag.Component{
 		{ID: "source", Name: "Source", Category: "Sources", Outputs: []dag.PortDef{port("out", dag.PortOutput)}},
-		{ID: "transform", Name: "Transform", Category: "Transforms",
-			Inputs: []dag.PortDef{port("in", dag.PortInput)}, Outputs: []dag.PortDef{port("out", dag.PortOutput)}},
+		{
+			ID: "transform", Name: "Transform", Category: "Transforms",
+			Inputs: []dag.PortDef{port("in", dag.PortInput)}, Outputs: []dag.PortDef{port("out", dag.PortOutput)},
+		},
 		{ID: "sink", Name: "Sink", Category: "Sinks", Inputs: []dag.PortDef{port("in", dag.PortInput)}},
 	} {
 		reg.MustRegister(comp)
