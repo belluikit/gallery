@@ -930,10 +930,18 @@ func FychartsPage(_ bellui.Window) core.CanvasObject {
 			drawStatusLabel.Refresh()
 		}),
 	)
+	// The grid sizes each phone row to its tallest content, so below four
+	// rows of tool buttons the chart got only its 150pt minimum: the title,
+	// and no room left for the plot under its 90pt of margins. Give it the
+	// height of the tallest chart in the tab (the chart group's 300pt).
+	var drawArea core.CanvasObject = drawChart
+	if bellui.CurrentDevice().IsMobile() {
+		drawArea = pageMinSize(0, 300, drawChart)
+	}
 	drawChartWithTools := container.NewBorder(
 		container.NewVBox(toolButtons, drawStatusLabel),
 		nil, nil, nil,
-		drawChart,
+		drawArea,
 	)
 
 	// Tabbed layout — grouped by category, 2x2 grids per tab
