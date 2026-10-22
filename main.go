@@ -217,11 +217,11 @@ func main() {
 // header (icon, name, version), markdown body over the parallax underlay,
 // and a links footer.
 func showAbout(a bellui.App, w bellui.Window) {
-	site, _ := url.Parse("https://github.com/belluikit/gallery")
-	belluiRepo, _ := url.Parse("https://github.com/belluikit/bellui")
+	gallerySite, _ := url.Parse("https://bellui.com/gallery")
+	belluiSite, _ := url.Parse("https://bellui.com")
 	links := []*widget.Hyperlink{
-		widget.NewHyperlink("Gallery", site),
-		widget.NewHyperlink("Bellui", belluiRepo),
+		widget.NewHyperlink("Gallery", gallerySite),
+		widget.NewHyperlink("Bellui", belluiSite),
 	}
 	dialog.ShowAbout(`## Material Design 3 Gallery
 
