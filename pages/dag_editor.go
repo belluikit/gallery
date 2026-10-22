@@ -66,23 +66,38 @@ func DAGEditorPage(w bellui.Window) core.CanvasObject {
 		}
 		showPanel()
 	}
-	c.OnNodeSelected = func(id string) {
-		if n := c.Graph.Nodes[id]; n != nil {
-			status.SetText(fmt.Sprintf("%s: %d in, %d out", n.Label, len(n.Inputs), len(n.Outputs)))
+	// nodeStatus rewrites the status line for the selected node; nil when no
+	// node is selected. It runs again on every graph change, so the line
+	// follows a rename from the menu or the panel, and an undo or redo.
+	var nodeStatus func()
+	c.OnGraphChanged = func() {
+		if nodeStatus != nil {
+			nodeStatus()
 		}
+	}
+	c.OnNodeSelected = func(id string) {
+		nodeStatus = func() {
+			if n := c.Graph.Nodes[id]; n != nil {
+				status.SetText(fmt.Sprintf("%s: %d in, %d out", n.Label, len(n.Inputs), len(n.Outputs)))
+			}
+		}
+		nodeStatus()
 		setSelection(func(p *dagwidget.PropertiesPanel) { p.SetNode(c.Graph.Nodes[id]) })
 	}
 	c.OnGroupSelected = func(id string) {
+		nodeStatus = nil
 		setSelection(func(p *dagwidget.PropertiesPanel) { p.SetGroup(c.Graph.Groups[id]) })
 	}
 	c.OnAnnotationSelected = func(id string) {
+		nodeStatus = nil
 		setSelection(func(p *dagwidget.PropertiesPanel) { p.SetAnnotation(c.Graph.Annotations[id]) })
 	}
 	c.OnEdgeSelected = func(string) {
+		nodeStatus = nil
 		setSelection(func(p *dagwidget.PropertiesPanel) { p.SetNode(nil) })
 	}
 	c.OnSelectionCleared = func() {
-		selected = nil
+		selected, nodeStatus = nil, nil
 		showInPanel(func(p *dagwidget.PropertiesPanel) { p.SetNode(nil) })
 		deleteBtn.Disable()
 		status.SetText("Nothing selected.")
@@ -151,7 +166,9 @@ func DAGEditorPage(w bellui.Window) core.CanvasObject {
 }
 
 // dagRenameDialog asks for a node's new name and renames it as one undoable
-// step.
+// step. Return in the name field confirms, like the Rename button: on a phone
+// the keyboard covers the dialog's buttons, so its Done key is the confirm in
+// reach.
 func dagRenameDialog(w bellui.Window, c *dagwidget.DAGCanvas, id string, done func()) {
 	n := c.Graph.Nodes[id]
 	if n == nil {
@@ -159,7 +176,7 @@ func dagRenameDialog(w bellui.Window, c *dagwidget.DAGCanvas, id string, done fu
 	}
 	entry := widget.NewEntry()
 	entry.SetText(n.Label)
-	dialog.ShowForm("Rename node", "Rename", "Cancel",
+	d := dialog.NewForm("Rename node", "Rename", "Cancel",
 		[]*widget.FormItem{widget.NewFormItem("Name", entry)},
 		func(ok bool) {
 			if !ok || entry.Text == "" || entry.Text == n.Label {
@@ -168,6 +185,8 @@ func dagRenameDialog(w bellui.Window, c *dagwidget.DAGCanvas, id string, done fu
 			c.Commands.Do(&dagwidget.RenameNodeCommand{Canvas: c, NodeID: id, Old: n.Label, New: entry.Text})
 			done()
 		}, w)
+	entry.OnSubmitted = func(string) { d.Submit() }
+	d.Show()
 	w.Canvas().Focus(entry)
 }
 
