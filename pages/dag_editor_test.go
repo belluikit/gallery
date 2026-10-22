@@ -2,6 +2,7 @@ package pages
 
 import (
 	"encoding/json"
+	"fmt"
 	"testing"
 
 	"github.com/belluikit/bellui"
@@ -360,6 +361,65 @@ func TestDAGNodeMenuRename(t *testing.T) {
 	}
 	if got := p.field(t, "Name").(*widget.Entry).Text; got != "Aggregate" {
 		t.Fatalf("panel Name %q after Undo, want Aggregate", got)
+	}
+}
+
+// Return in the name field renames, as the Rename button does. On a phone the
+// keyboard covers the dialog's buttons, so its Done/✓ key is the only confirm
+// in reach; it used to close the keyboard and leave the dialog open
+// (belluikit/bellui#629, seen on a Pixel 9a).
+func TestDAGNodeMenuRenameOnReturn(t *testing.T) {
+	p := newDAGPage(t)
+	tapMenuItem(t, p.openNodeMenu(t, "kpis"), "Rename…")
+	entry, ok := p.w.Canvas().Focused().(*widget.Entry)
+	if !ok {
+		t.Fatalf("focused %T, want the name entry", p.w.Canvas().Focused())
+	}
+	entry.SetText("")
+	p.typeInto(t, entry, "KPIs")
+	p.w.Canvas().Focused().(event.Focusable).TypedKey(&event.KeyEvent{Name: event.KeyReturn})
+
+	if got := p.label("kpis"); got != "KPIs" {
+		t.Fatalf("label %q after Return, want KPIs", got)
+	}
+	walkObjects(p.w.Canvas().Overlays().Top(), func(o core.CanvasObject) {
+		if b, ok := o.(*widget.Button); ok && b.Text == "Rename" {
+			t.Fatal("the rename dialog is still open after Return")
+		}
+	})
+	test.Tap(p.button(t, "Undo"))
+	if got := p.label("kpis"); got != "Aggregate" {
+		t.Fatalf("label %q after Undo, want Aggregate", got)
+	}
+}
+
+// The status line names the selected node, and follows its name through a
+// rename from the menu, an Undo, and typing in the panel's Name field. It
+// used to keep the name the node had when it was selected (seen on a Pixel
+// 9a, belluikit/bellui#629).
+func TestDAGStatusFollowsRename(t *testing.T) {
+	p := newDAGPage(t)
+	n := p.canvas.Graph.Nodes["kpis"]
+	statusFor := func(name string) string {
+		return fmt.Sprintf("%s: %d in, %d out", name, len(n.Inputs), len(n.Outputs))
+	}
+	tapMenuItem(t, p.openNodeMenu(t, "kpis"), "Rename…")
+	entry := p.w.Canvas().Focused().(*widget.Entry)
+	entry.SetText("")
+	p.typeInto(t, entry, "KPIs")
+	p.w.Canvas().Focused().(event.Focusable).TypedKey(&event.KeyEvent{Name: event.KeyReturn})
+	if !shows(p.w.Content(), statusFor("KPIs")) {
+		t.Errorf("status does not show %q after the menu rename", statusFor("KPIs"))
+	}
+
+	test.Tap(p.button(t, "Undo"))
+	if !shows(p.w.Content(), statusFor("Aggregate")) {
+		t.Errorf("status does not show %q after Undo", statusFor("Aggregate"))
+	}
+
+	p.typeInto(t, p.field(t, "Name").(*widget.Entry), "!")
+	if !shows(p.w.Content(), statusFor("Aggregate!")) {
+		t.Errorf("status does not show %q after typing in the panel", statusFor("Aggregate!"))
 	}
 }
 
