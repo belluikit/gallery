@@ -944,30 +944,44 @@ func FychartsPage(_ bellui.Window) core.CanvasObject {
 		drawArea,
 	)
 
-	// Tabbed layout — grouped by category, 2x2 grids per tab
-	// Two charts side by side are wider than a phone, and the page does not
-	// scroll sideways, so the right-hand column was unreachable there.
-	cols := 2
-	if bellui.CurrentDevice().IsMobile() {
-		cols = 1
+	// Tabbed layout — grouped by category, 2x2 grids per tab on desktop.
+	//
+	// A phone gets one chart per row, since two side by side are wider than
+	// the screen, each chart the same fixed height, stacked from the top.
+	// An equal-row grid stretched them instead: the tabs are all as tall as
+	// the tallest one, so the drawing-tools row set every chart's height in
+	// every tab.
+	mobile := bellui.CurrentDevice().IsMobile()
+	charts := func(objs ...core.CanvasObject) core.CanvasObject {
+		if !mobile {
+			return container.NewGridWithColumns(2, objs...)
+		}
+		// A chart keeps a one-finger drag for itself, so the gaps between
+		// charts are where one finger scrolls the page.
+		var rows []core.CanvasObject
+		for i, o := range objs {
+			if i > 0 {
+				gap := canvas.NewRectangle(color.Transparent)
+				gap.SetMinSize(geo.NewSize(0, phoneChartGap))
+				rows = append(rows, gap)
+			}
+			rows = append(rows, pageMinSize(0, phoneChartHeight, o))
+		}
+		return container.NewVBox(rows...)
+	}
+	var drilldown core.CanvasObject = barChart // one chart, filling the tab
+	if mobile {
+		drilldown = charts(barChart) // the tab is as tall as Trading on a phone
 	}
 	tabs := container.NewAppTabs(
-		container.NewTabItem("Basic",
-			container.NewGridWithColumns(cols, lineChart, stackedBarChart, scatterChart, pieChart)),
-		container.NewTabItem("Financial",
-			container.NewGridWithColumns(cols, candlestickChart, boxplotChart, heatmapChart, parallelChart)),
-		container.NewTabItem("Hierarchical",
-			container.NewGridWithColumns(cols, treemapChart, sunburstChart, sankeyChart, treeChart)),
-		container.NewTabItem("Specialized",
-			container.NewGridWithColumns(cols, radarChart, gaugeChart, funnelChart, graphChart)),
-		container.NewTabItem("Advanced",
-			container.NewGridWithColumns(cols, pictorialChart, effectChart, customChart, builderChart)),
-		container.NewTabItem("Drilldown",
-			container.NewGridWithColumns(1, barChart)),
-		container.NewTabItem("3D",
-			container.NewGridWithColumns(cols, bar3DChart, scatter3DChart, surfaceChart, line3DChart)),
-		container.NewTabItem("Trading",
-			container.NewGridWithColumns(cols, dashedChart, chartGroup, streamChart, drawChartWithTools)),
+		container.NewTabItem("Basic", charts(lineChart, stackedBarChart, scatterChart, pieChart)),
+		container.NewTabItem("Financial", charts(candlestickChart, boxplotChart, heatmapChart, parallelChart)),
+		container.NewTabItem("Hierarchical", charts(treemapChart, sunburstChart, sankeyChart, treeChart)),
+		container.NewTabItem("Specialized", charts(radarChart, gaugeChart, funnelChart, graphChart)),
+		container.NewTabItem("Advanced", charts(pictorialChart, effectChart, customChart, builderChart)),
+		container.NewTabItem("Drilldown", drilldown),
+		container.NewTabItem("3D", charts(bar3DChart, scatter3DChart, surfaceChart, line3DChart)),
+		container.NewTabItem("Trading", charts(dashedChart, chartGroup, streamChart, drawChartWithTools)),
 		container.NewTabItem("Geo",
 			container.NewBorder(
 				container.NewBorder(
@@ -976,10 +990,18 @@ func FychartsPage(_ bellui.Window) core.CanvasObject {
 					apiKeyEntry,
 				),
 				nil, nil, nil,
-				container.NewGridWithColumns(cols, worldMap, choroplethMap),
+				charts(worldMap, choroplethMap),
 			)),
 	)
 	tabs.SetTabLocation(container.TabLocationTop)
 
 	return pageMinSize(1100, 760, tabs)
 }
+
+// phoneChartHeight is each chart's height on a phone: a readable plot, with
+// two charts and a bit of the next on a ~900pt screen.
+const phoneChartHeight = 360
+
+// phoneChartGap is the space between charts on a phone, room for a finger to
+// scroll the tab.
+const phoneChartGap = 24
