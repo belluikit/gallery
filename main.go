@@ -67,8 +67,10 @@ func main() {
 	}
 
 	// Page registry: core pages everywhere, native-only pages appended on
-	// desktop. The drawer and content are both driven off this single slice.
+	// desktop, and the audio player wherever FFmpeg links (not the web). The
+	// drawer and content are both driven off this single slice.
 	registry := append(corePages(), pages.NativePages()...)
+	registry = append(registry, pages.AudioPages()...)
 
 	// Content area. pageSlot hosts the active page; how it is hosted depends on
 	// the page:
