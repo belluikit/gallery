@@ -157,21 +157,18 @@ func AudioPlayerPage(w bellui.Window) core.CanvasObject {
 
 	openFile := widget.NewButtonWithIcon("Open file…", theme.FolderOpenIcon(), func() {
 		dialog.ShowFileOpen(func(r bellui.URIReadCloser, err error) {
-			if err != nil || r == nil {
+			if err != nil {
+				logf("cannot open the file: %v", err)
 				return
 			}
-			uri := r.URI()
-			if uri.Scheme() == "file" {
-				// By path, so FFmpeg owns the file and can seek in it.
-				_ = r.Close()
-				show(uri.Name(), func(opts []mmedia.Option) (*mmedia.AudioPlayer, error) {
-					return mmedia.NewAudioPlayerURL(uri.Path(), opts...)
-				})
+			if r == nil {
+				logf("no file chosen")
 				return
 			}
-			// A content URI (Android) or another provider: read it through,
-			// and close it with the player.
-			show(uri.Name(), func(opts []mmedia.Option) (*mmedia.AudioPlayer, error) {
+			// Read it through the dialog's reader, which seeks on every
+			// platform, and close it with the player: on iOS the reader holds
+			// the access a file picked from outside the app needs.
+			show(r.URI().Name(), func(opts []mmedia.Option) (*mmedia.AudioPlayer, error) {
 				return mmedia.NewAudioPlayer(r, opts...)
 			})
 			if current != nil {
