@@ -34,15 +34,24 @@ func TestComponentPagesConstruct(t *testing.T) {
 			a := test.NewApp()
 			defer a.Quit()
 
-			w := test.NewWindow(nil)
-			defer w.Close()
-			w.Resize(geo.NewSize(1200, 800))
+			// Pages like File Tree finish loading through bellui.Do, which
+			// the test driver runs under its lock. Building the page inside
+			// DoAndWait takes the same lock, so the two never touch the
+			// page at once (belluikit/bellui#639).
+			var obj core.CanvasObject
+			bellui.DoAndWait(func() {
+				w := test.NewWindow(nil)
+				defer w.Close()
+				w.Resize(geo.NewSize(1200, 800))
 
-			obj := page(w)
+				obj = page(w)
+				if obj != nil {
+					w.SetContent(obj)
+				}
+			})
 			if obj == nil {
 				t.Fatalf("%s page returned nil content", name)
 			}
-			w.SetContent(obj)
 		})
 	}
 }
