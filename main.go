@@ -42,12 +42,6 @@ func corePages() []pages.PageDef {
 }
 
 func main() {
-	app.SetMetadata(bellui.AppMetadata{
-		ID:      "io.bellui.md3gallery",
-		Name:    "MD3 Gallery",
-		Version: "1.0.0",
-		Icon:    theme.ColorPaletteIcon(),
-	})
 	a := app.NewWithID("io.bellui.md3gallery")
 
 	// Restore the appearance chosen on the Theme page (stored in the
