@@ -46,9 +46,9 @@ require (
 
 require (
 	github.com/RoaringBitmap/roaring/v2 v2.4.5 // indirect
-	github.com/belluikit/bellui/x/charts v1.2.0
-	github.com/belluikit/bellui/x/editor v1.2.0
-	github.com/belluikit/bellui/x/tables v1.2.0
+	github.com/belluikit/bellui/x/charts v1.3.0-rc.1
+	github.com/belluikit/bellui/x/editor v1.3.0-rc.1
+	github.com/belluikit/bellui/x/tables v1.3.0-rc.1
 	github.com/bits-and-blooms/bitset v1.22.0 // indirect
 	github.com/blevesearch/bleve/v2 v2.5.7 // indirect
 	github.com/blevesearch/bleve_index_api v1.2.11 // indirect
