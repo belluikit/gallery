@@ -269,10 +269,10 @@ func TestDAGDeleteButtonReadOnly(t *testing.T) {
 	}
 }
 
-// The Delete key on a read-only canvas deletes nothing, but x/dag v1.2.0
-// reports the selection as cleared anyway, so the page empties its panel
-// while the node stays highlighted (belluikit/bellui#638). This pins
-// that: when the fix lands, the second check fails and should be inverted.
+// The Delete key on a read-only canvas deletes nothing and keeps the node
+// selected, so the panel keeps showing it. x/dag v1.2.0 reported a clear it
+// did not do and the page emptied its panel; v1.3.0 fixed that
+// (belluikit/bellui#638).
 func TestDAGDeleteKeyReadOnly(t *testing.T) {
 	p := newDAGPage(t)
 	p.canvas.Capabilities = dagwidget.Capabilities{}
@@ -281,8 +281,8 @@ func TestDAGDeleteKeyReadOnly(t *testing.T) {
 	if p.canvas.Graph.Nodes["train"] == nil {
 		t.Fatal("a read-only canvas deleted a node")
 	}
-	if shows(p.panel(t), "Train model") {
-		t.Fatal("the panel still shows the node: x/dag no longer reports a clear it did not do; invert this check")
+	if !shows(p.panel(t), "Train model") {
+		t.Fatal("the panel stopped showing the node after a Delete the canvas refused")
 	}
 }
 
