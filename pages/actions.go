@@ -48,6 +48,28 @@ func ActionsPage(_ bellui.Window) core.CanvasObject {
 	))
 	iconBtnCard.Style = widget.CardStyleOutlined
 
+	// --- Danger ---
+	dangerIcon := func(style widget.IconButtonStyle) *widget.IconButton {
+		b := widget.NewIconButton(theme.DeleteIcon(), func() {})
+		b.Style = style
+		b.Importance = widget.DangerImportance
+		return b
+	}
+	dangerCard := widget.NewCard("Danger", "Destructive actions in every style", container.NewVBox(
+		container.NewHBox(
+			&widget.Button{Text: "Text", Style: widget.ButtonStyleText, Importance: widget.DangerImportance, OnTapped: func() {}},
+			&widget.Button{Text: "Outlined", Style: widget.ButtonStyleOutlined, Importance: widget.DangerImportance, OnTapped: func() {}},
+			&widget.Button{Text: "Filled", Style: widget.ButtonStyleFilled, Importance: widget.DangerImportance, OnTapped: func() {}},
+		),
+		container.NewHBox(
+			container.NewVBox(widget.NewLabel("Standard"), dangerIcon(widget.IconButtonStyleStandard)),
+			container.NewVBox(widget.NewLabel("Filled"), dangerIcon(widget.IconButtonStyleFilled)),
+			container.NewVBox(widget.NewLabel("Tonal"), dangerIcon(widget.IconButtonStyleFilledTonal)),
+			container.NewVBox(widget.NewLabel("Outlined"), dangerIcon(widget.IconButtonStyleOutlined)),
+		),
+	))
+	dangerCard.Style = widget.CardStyleOutlined
+
 	// --- Segmented Button ---
 	seg := widget.NewSegmentedButton([]string{"Day", "Week", "Month", "Year"}, func(int) {})
 	segCard := widget.NewCard("Segmented Button", "Single-select toggle group", seg)
@@ -70,5 +92,5 @@ func ActionsPage(_ bellui.Window) core.CanvasObject {
 	splitCard := widget.NewCard("Split Button", "Primary action + dropdown menu", split)
 	splitCard.Style = widget.CardStyleOutlined
 
-	return container.NewVBox(buttonsCard, fabCard, iconBtnCard, segCard, bgCard, splitCard)
+	return container.NewVBox(buttonsCard, fabCard, iconBtnCard, dangerCard, segCard, bgCard, splitCard)
 }
