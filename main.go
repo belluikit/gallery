@@ -37,6 +37,7 @@ func corePages() []pages.PageDef {
 		{Name: "Font Picker", Icon: theme.DocumentIcon(), New: pages.FontPickerPage},
 		{Name: "Inputs", Icon: theme.DocumentCreateIcon(), New: pages.InputsPage},
 		{Name: "Navigation", Icon: theme.ComputerIcon(), New: pages.NavigationPage},
+		{Name: "Pickers", Icon: theme.HistoryIcon(), New: pages.PickersPage},
 		{Name: "Responsive", Icon: theme.ViewFullScreenIcon(), New: pages.ResponsivePage},
 		{Name: "Scrolling", Icon: theme.MoveDownIcon(), New: pages.ScrollingPage, Fill: true},
 		{Name: "Theme", Icon: theme.ColorPaletteIcon(), New: pages.ThemePage},

@@ -20,6 +20,7 @@ func TestComponentPagesConstruct(t *testing.T) {
 		"Animated GIF":  pages.AnimatedGifPage,
 		"Charts":        pages.FychartsPage,
 		"Choice":        pages.ChoicePage,
+		"Pickers":       pages.PickersPage,
 		"File Tree":     pages.FileTreePage,
 		"Responsive":    pages.ResponsivePage,
 		"Scrolling":     pages.ScrollingPage,
