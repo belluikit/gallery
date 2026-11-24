@@ -27,10 +27,11 @@ func TestPagesFitAPhone(t *testing.T) {
 	a.Settings().SetTheme(theme.DefaultTheme())
 	w := test.NewTempWindow(t, nil)
 	for name, page := range map[string]func(bellui.Window) core.CanvasObject{
-		"Choice":   pages.ChoicePage,
-		"Pickers":  pages.PickersPage,
-		"Text":     pages.TextPage,
-		"Gestures": pages.GesturesPage,
+		"Choice":    pages.ChoicePage,
+		"Pickers":   pages.PickersPage,
+		"Text":      pages.TextPage,
+		"Gestures":  pages.GesturesPage,
+		"Structure": pages.StructurePage,
 	} {
 		if got := page(w).MinSize().Width; got > phoneWidth {
 			t.Errorf("%s page needs %.0f dp, more than a phone's %d", name, got, phoneWidth)
