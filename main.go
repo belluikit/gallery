@@ -26,6 +26,7 @@ func corePages() []pages.PageDef {
 		{Name: "Animated GIF", Icon: theme.MediaPlayIcon(), New: pages.AnimatedGifPage},
 		{Name: "Auth", Icon: theme.AccountIcon(), New: pages.AuthPage},
 		{Name: "Charts", Icon: theme.HistoryIcon(), New: pages.FychartsPage},
+		{Name: "Choice", Icon: theme.CheckButtonCheckedIcon(), New: pages.ChoicePage},
 		{Name: "Code Editor", Icon: theme.DocumentCreateIcon(), New: pages.FycoderPage, Fill: true},
 		{Name: "Communication", Icon: theme.InfoIcon(), New: pages.CommunicationPage},
 		{Name: "Containment", Icon: theme.ContentCopyIcon(), New: pages.ContainmentPage},
