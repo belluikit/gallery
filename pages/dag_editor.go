@@ -42,8 +42,7 @@ func DAGEditorPage(w bellui.Window) core.CanvasObject {
 		p := dagwidget.NewPropertiesPanel(reg, c.Commands)
 		p.CanvasRef = c // gives the panel its Name field, and its edits the canvas's undo stack
 		set(p)
-		panelSlot.Objects = []core.CanvasObject{p}
-		panelSlot.Refresh()
+		Show(panelSlot, p)
 	}
 	showInPanel(func(p *dagwidget.PropertiesPanel) { p.SetNode(nil) })
 

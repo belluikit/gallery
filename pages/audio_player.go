@@ -107,14 +107,12 @@ func AudioPlayerPage(w bellui.Window) core.CanvasObject {
 		position.SetText("")
 		ap, err := open(options())
 		if err != nil {
-			slot.Objects = []core.CanvasObject{widget.NewLabel("Cannot play " + name + ": " + err.Error())}
-			slot.Refresh()
+			Show(slot, widget.NewLabel("Cannot play "+name+": "+err.Error()))
 			logf("cannot open %s: %v", name, err)
 			return
 		}
 		current = ap
-		slot.Objects = []core.CanvasObject{ap}
-		slot.Refresh()
+		Show(slot, ap)
 		logf("opened %s (%s)", name, formatClock(ap.Duration()))
 	}
 	playClip := func(i int) {
