@@ -54,12 +54,12 @@ func ChoicePage(_ bellui.Window) core.CanvasObject {
 	align.SetSelected("Start")
 	disableables = append(disableables, single, multi, three)
 
-	chipCard := widget.NewCard("Chip Group", "Filter chips to pick from, wrapping onto the next row", container.NewVBox(
+	chipCard := widget.NewCard("Chip Group", "Filter chips that wrap into rows", container.NewVBox(
 		widget.NewLabel("One at a time, one always picked (Required):"), single, singleStatus,
 		widget.NewSeparator(),
 		widget.NewLabel("Any number (Multiple):"), multi, multiStatus,
 		widget.NewSeparator(),
-		widget.NewLabel("Three states (Multiple + Excludable): tap a chip to move it off → included → excluded → off"),
+		note("Three states (Multiple + Excludable): each tap moves a chip off → included → excluded → off."),
 		three, threeStatus,
 		widget.NewSeparator(),
 		container.NewHBox(widget.NewLabel("Rows aligned at"), align),
@@ -79,10 +79,10 @@ func ChoicePage(_ bellui.Window) core.CanvasObject {
 	vertical.OnChanged = func(sel []string) { checkStatus.SetText("Notify by: " + joinOrNone(sel)) }
 	disableables = append(disableables, vertical, horizontal, required)
 
-	checkCard := widget.NewCard("Check Group", "Checkboxes for a set of options", container.NewVBox(
+	checkCard := widget.NewCard("Check Group", "Checkboxes for a set", container.NewVBox(
 		widget.NewLabel("Vertical:"), vertical, checkStatus,
 		widget.NewLabel("Horizontal:"), horizontal,
-		widget.NewLabel("Required (the last one can't be unticked):"), required,
+		note("Required (the last one can't be unticked):"), required,
 	))
 	checkCard.Style = widget.CardStyleOutlined
 
@@ -97,7 +97,8 @@ func ChoicePage(_ bellui.Window) core.CanvasObject {
 	speed.OnChanged = func(v float64) { speedStatus.SetText(fmt.Sprintf("Speed: %.2f×", v)) }
 	disableables = append(disableables, count, speed)
 
-	spinCard := widget.NewCard("Spin Box", "A number with step buttons; arrow keys step it too", container.NewVBox(
+	spinCard := widget.NewCard("Spin Box", "A number with step buttons", container.NewVBox(
+		note("The arrow keys step it too."),
 		widget.NewLabel("Whole numbers, 0 to 10:"), container.NewHBox(count, countStatus),
 		widget.NewLabel("Steps of 0.25, 0 to 5:"), container.NewHBox(speed, speedStatus),
 	))
