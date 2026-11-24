@@ -29,6 +29,7 @@ func corePages() []pages.PageDef {
 		{Name: "Choice", Icon: theme.CheckButtonCheckedIcon(), New: pages.ChoicePage},
 		{Name: "Code Editor", Icon: theme.DocumentCreateIcon(), New: pages.FycoderPage, Fill: true},
 		{Name: "Communication", Icon: theme.InfoIcon(), New: pages.CommunicationPage},
+		{Name: "Containers", Icon: theme.ViewFullScreenIcon(), New: pages.ContainersPage},
 		{Name: "Containment", Icon: theme.ContentCopyIcon(), New: pages.ContainmentPage},
 		{Name: "DAG Editor", Icon: theme.ViewFullScreenIcon(), New: pages.DAGEditorPage, Fill: true},
 		{Name: "Data Grid", Icon: theme.GridIcon(), New: pages.FytablesPage},
