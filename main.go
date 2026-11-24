@@ -8,7 +8,6 @@ import (
 	"github.com/belluikit/bellui"
 	"github.com/belluikit/bellui/app"
 	"github.com/belluikit/bellui/container"
-	"github.com/belluikit/bellui/core"
 	"github.com/belluikit/bellui/dev"
 	"github.com/belluikit/bellui/dialog"
 	"github.com/belluikit/bellui/geo"
@@ -99,17 +98,17 @@ func main() {
 	setPage := func() {
 		pages.LeavePage() // stop whatever the previous page left running
 		page := registry[current].New(w)
-		if registry[current].Fill {
-			pageSlot.Objects = []core.CanvasObject{page}
-		} else {
+		if !registry[current].Fill {
 			inner := container.NewPadded(page)
 			if isMobile {
-				pageSlot.Objects = []core.CanvasObject{container.NewScroll(inner)}
+				page = container.NewScroll(inner)
 			} else {
-				pageSlot.Objects = []core.CanvasObject{container.NewVScroll(inner)}
+				page = container.NewVScroll(inner)
 			}
 		}
-		pageSlot.Refresh()
+		// Show releases the page this replaces, so its widgets and textures
+		// don't stay cached while the gallery sits idle.
+		pages.Show(pageSlot, page)
 	}
 	setPage()
 
