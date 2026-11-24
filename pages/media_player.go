@@ -60,13 +60,11 @@ func MediaPlayerPage(w bellui.Window) core.CanvasObject {
 		}
 		mp, err := mmedia.NewMediaPlayerURL(path, mmedia.WithAutoPlay(), mmedia.WithLoop())
 		if err != nil {
-			slot.Objects = []core.CanvasObject{widget.NewLabel("Cannot play " + name + ": " + err.Error())}
-			slot.Refresh()
+			Show(slot, widget.NewLabel("Cannot play "+name+": "+err.Error()))
 			return
 		}
 		current = mp
-		slot.Objects = []core.CanvasObject{mp}
-		slot.Refresh()
+		Show(slot, mp)
 		status.SetText("Playing " + name)
 	}
 	OnLeave(func() {

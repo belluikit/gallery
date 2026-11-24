@@ -34,8 +34,7 @@ func FileTreePage(_ bellui.Window) core.CanvasObject {
 		tree.OnSelected = func(id widget.TreeNodeID) {
 			selected.SetText(id)
 		}
-		treeSlot.Objects = []core.CanvasObject{tree}
-		treeSlot.Refresh()
+		Show(treeSlot, tree)
 	}
 
 	hiddenSwitch := widget.NewSwitch(func(on bool) {
