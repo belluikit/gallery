@@ -22,6 +22,7 @@ func TestComponentPagesConstruct(t *testing.T) {
 		"Choice":        pages.ChoicePage,
 		"Pickers":       pages.PickersPage,
 		"Text":          pages.TextPage,
+		"Gestures":      pages.GesturesPage,
 		"File Tree":     pages.FileTreePage,
 		"Responsive":    pages.ResponsivePage,
 		"Scrolling":     pages.ScrollingPage,
