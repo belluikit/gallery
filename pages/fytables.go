@@ -8,6 +8,7 @@ import (
 	"math"
 	"math/rand"
 	"os"
+	"sort"
 	"time"
 
 	"github.com/belluikit/bellui"
@@ -31,6 +32,7 @@ func FytablesPage(w bellui.Window) core.CanvasObject {
 		&container.TabItem{Text: "Pivot", Content: makePivotTab()},
 		&container.TabItem{Text: "Tree Data", Content: makeTreeTab()},
 		&container.TabItem{Text: "Editing", Content: makeEditingTab()},
+		&container.TabItem{Text: "Selection", Content: makeSelectionTab()},
 		&container.TabItem{Text: "Large Data", Content: makeLargeDataTab()},
 	)
 
@@ -371,6 +373,51 @@ func makeTreeTab() core.CanvasObject {
 
 	info := widget.NewLabel("Hierarchical org chart. Tree data uses parent-child IDs. Click expand/collapse icons.")
 	return container.NewBorder(info, nil, nil, nil, grid)
+}
+
+// ─── Selection modes ─────────────────────────────────────────────────────
+
+// makeSelectionTab shows the four selection modes on one grid, its Symbol
+// column pinned on the left, and what OnSelectionChanged reports.
+func makeSelectionTab() core.CanvasObject {
+	data := generateStocks(40)
+	grid := tables.NewDataGrid(
+		[]*tables.ColumnDef{
+			{Field: "symbol", HeaderName: "Symbol", Width: 80, Pinned: tables.PinLeft},
+			{Field: "name", HeaderName: "Company", Width: 180},
+			{Field: "sector", HeaderName: "Sector", Width: 130},
+			{Field: "price", HeaderName: "Price", Type: tables.ColumnNumber, Width: 90},
+			{Field: "change", HeaderName: "Change", Type: tables.ColumnNumber, Width: 90},
+		},
+		func() int { return len(data) },
+		func(row int) any { return data[row] },
+	)
+
+	reported := widget.NewLabel("OnSelectionChanged has not fired.")
+	grid.OnSelectionChanged = func(rows []int) {
+		sort.Ints(rows)
+		reported.SetText(fmt.Sprintf("OnSelectionChanged: source rows %v", rows))
+	}
+
+	modes := map[string]tables.SelectionMode{
+		"Single row":     tables.SelectionSingleRow,
+		"Multiple rows":  tables.SelectionMultiRow,
+		"Single cell":    tables.SelectionSingleCell,
+		"Multiple cells": tables.SelectionMultiCell,
+	}
+	mode := widget.NewSelect([]string{"Single row", "Multiple rows", "Single cell", "Multiple cells"}, func(s string) {
+		grid.API().DeselectAll()
+		grid.SelectionMode = modes[s]
+		grid.Refresh()
+		reported.SetText("OnSelectionChanged has not fired.")
+	})
+	mode.SetSelected("Multiple cells")
+
+	info := widget.NewLabel("Click selects. Ctrl/Cmd-click adds or removes a row or cell, Shift-click selects a range. " +
+		"Ctrl/Cmd+C copies the selection; paste it into a text editor.")
+	info.Wrapping = bellui.TextWrapWord
+	top := container.NewVBox(info, container.NewHBox(widget.NewLabel("Mode:"), mode), reported)
+	return container.NewBorder(top, nil, nil, nil, grid)
 }
 
 // ─── Tab 7: Cell Editing ─────────────────────────────────────────────────
