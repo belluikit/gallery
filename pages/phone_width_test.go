@@ -29,6 +29,7 @@ func TestPagesFitAPhone(t *testing.T) {
 	for name, page := range map[string]func(bellui.Window) core.CanvasObject{
 		"Choice":  pages.ChoicePage,
 		"Pickers": pages.PickersPage,
+		"Text":    pages.TextPage,
 	} {
 		if got := page(w).MinSize().Width; got > phoneWidth {
 			t.Errorf("%s page needs %.0f dp, more than a phone's %d", name, got, phoneWidth)
