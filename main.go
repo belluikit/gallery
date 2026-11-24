@@ -34,6 +34,7 @@ func corePages() []pages.PageDef {
 		{Name: "Data Grid", Icon: theme.GridIcon(), New: pages.FytablesPage},
 		{Name: "File Transfer", Icon: theme.UploadIcon(), New: pages.UploaderPage},
 		{Name: "File Tree", Icon: theme.FolderOpenIcon(), New: pages.FileTreePage, Fill: true},
+		{Name: "Gestures", Icon: theme.ViewRestoreIcon(), New: pages.GesturesPage},
 		{Name: "Font Picker", Icon: theme.DocumentIcon(), New: pages.FontPickerPage},
 		{Name: "Inputs", Icon: theme.DocumentCreateIcon(), New: pages.InputsPage},
 		{Name: "Navigation", Icon: theme.ComputerIcon(), New: pages.NavigationPage},
