@@ -19,6 +19,7 @@ func TestComponentPagesConstruct(t *testing.T) {
 	componentPages := map[string]func(bellui.Window) core.CanvasObject{
 		"Animated GIF":  pages.AnimatedGifPage,
 		"Charts":        pages.FychartsPage,
+		"Choice":        pages.ChoicePage,
 		"File Tree":     pages.FileTreePage,
 		"Responsive":    pages.ResponsivePage,
 		"Scrolling":     pages.ScrollingPage,
