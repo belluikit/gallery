@@ -41,6 +41,7 @@ func corePages() []pages.PageDef {
 		{Name: "Pickers", Icon: theme.HistoryIcon(), New: pages.PickersPage},
 		{Name: "Responsive", Icon: theme.ViewFullScreenIcon(), New: pages.ResponsivePage},
 		{Name: "Scrolling", Icon: theme.MoveDownIcon(), New: pages.ScrollingPage, Fill: true},
+		{Name: "Structure", Icon: theme.ListIcon(), New: pages.StructurePage},
 		{Name: "Text", Icon: theme.DocumentIcon(), New: pages.TextPage},
 		{Name: "Theme", Icon: theme.ColorPaletteIcon(), New: pages.ThemePage},
 		{Name: "Typography", Icon: theme.DocumentIcon(), New: pages.TypographyPage},
