@@ -14,9 +14,10 @@ import (
 )
 
 // phoneWidth is the width a page must fit without scrolling sideways: a
-// 412 dp phone (Pixel). Bellui's own pickers need up to 380 dp (the
-// DateTimePicker; a 12-hour TimePicker 364), so a page holding one cannot fit
-// a 360 dp phone; that is the widget's size (belluikit/bellui#1421).
+// 412 dp phone (Pixel). Since bellui v1.4.0 its pickers fit a 360 dp phone
+// (the DateTimePicker needs 344 dp, belluikit/bellui#1421), but the gallery's
+// own cards don't yet: its fixed 340 dp demo boxes and the DateTimePicker's
+// card need 370–374 dp (gallery#48).
 const phoneWidth = 412
 
 // The pages added for gallery#38 fit a phone's width: a card's subtitle is

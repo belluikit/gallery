@@ -158,9 +158,7 @@ func TextPage(w bellui.Window) core.CanvasObject {
 	grid := widget.NewTextGridFromString("package main\n\nfunc main() {\n\tprintln(\"hello\")  \n}\n")
 	grid.ShowLineNumbers = true
 	grid.ShowWhitespace = true
-	// Line 3's cells, not the whole row: with line numbers a row style's
-	// background runs past the grid (belluikit/bellui#1422).
-	grid.SetStyleRange(2, 0, 2, len([]rune(grid.RowText(2)))-1, &widget.CustomTextGridStyle{BGColor: theme.Color(theme.ColorNameSelection)})
+	grid.SetRowStyle(2, &widget.CustomTextGridStyle{BGColor: theme.Color(theme.ColorNameSelection)})
 	gridCard := widget.NewCard("Text Grid", "A monospaced grid of cells", container.NewVBox(
 		note("For code previews and terminals: line numbers, visible whitespace, and a style per cell (line 3 is highlighted)."),
 		grid,
