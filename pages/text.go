@@ -102,7 +102,7 @@ func TextPage(w bellui.Window) core.CanvasObject {
 		&widget.TextSegment{Style: widget.RichTextStyleCodeInline, Text: "code"},
 		&widget.TextSegment{Style: widget.RichTextStyleInline, Text: "."},
 	})
-	richBox := container.NewGridWrap(geo.NewSize(320, 110), rich)
+	richBox := container.NewGridWrap(geo.NewSize(300, 110), rich)
 	styleButton := func(label string, style widget.RichTextStyle) *widget.Button {
 		b := widget.NewButton(label, func() { rich.ApplyStyle(style) })
 		b.Importance = widget.LowImportance

@@ -66,7 +66,7 @@ func StructurePage(_ bellui.Window) core.CanvasObject {
 	}
 	tableCard := widget.NewCard("Table", "Rows and columns that scroll", container.NewVBox(
 		note("A header row, and the Planet column stays put while the rest scrolls sideways. Select a cell: the status bar at the bottom names it."),
-		container.NewGridWrap(geo.NewSize(340, 260), table),
+		container.NewGridWrap(geo.NewSize(300, 260), table),
 	))
 	tableCard.Style = widget.CardStyleOutlined
 
@@ -81,7 +81,7 @@ func StructurePage(_ bellui.Window) core.CanvasObject {
 	tree.OpenBranch("Documents")
 	tree.OnSelected = func(id widget.TreeNodeID) { statusSel.SetText("Tree: " + id) }
 	treeCard := widget.NewCard("Tree", "Branches that open and close", container.NewVBox(
-		container.NewGridWrap(geo.NewSize(340, 240), tree),
+		container.NewGridWrap(geo.NewSize(300, 240), tree),
 	))
 	treeCard.Style = widget.CardStyleOutlined
 
@@ -106,7 +106,7 @@ func StructurePage(_ bellui.Window) core.CanvasObject {
 	grid.OnSelected = func(id widget.GridWrapItemID) { statusSel.SetText(fmt.Sprintf("Grid: tile %d", id+1)) }
 	gridCard := widget.NewCard("Grid Wrap", "Tiles that wrap and scroll", container.NewVBox(
 		note("A list laid out in rows: as many tiles fit across as the width allows, and only the visible ones are built."),
-		container.NewGridWrap(geo.NewSize(340, 200), grid),
+		container.NewGridWrap(geo.NewSize(300, 200), grid),
 	))
 	gridCard.Style = widget.CardStyleOutlined
 
@@ -120,7 +120,7 @@ func StructurePage(_ bellui.Window) core.CanvasObject {
 	indicator.Placement = widget.ScrollIndicatorTopRight
 	indicatorCard := widget.NewCard("Scroll Indicator", "Where you are in a long scroll", container.NewVBox(
 		note("A small map laid over the scroll area; its box follows the visible part as you scroll."),
-		container.NewGridWrap(geo.NewSize(340, 220), container.NewStack(scroll, indicator)),
+		container.NewGridWrap(geo.NewSize(300, 220), container.NewStack(scroll, indicator)),
 	))
 	indicatorCard.Style = widget.CardStyleOutlined
 

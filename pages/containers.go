@@ -44,7 +44,7 @@ func ContainersPage(_ bellui.Window) core.CanvasObject {
 	docs.OnClosed = count
 	docs.OnSelected = count
 	docCard := section("Doc Tabs", "Tabs you can close and add",
-		note("Close a tab with its ×; the + makes a new one."), box(340, 120, docs), docStatus)
+		note("Close a tab with its ×; the + makes a new one."), box(300, 120, docs), docStatus)
 
 	// --- Inner windows ---
 	win1 := container.NewInnerWindow("Notes", widget.NewLabel("Drag me by the title bar."))
@@ -55,7 +55,7 @@ func ContainersPage(_ bellui.Window) core.CanvasObject {
 	windows := container.NewMultipleWindows(win1, win2)
 	winCard := section("Inner Window", "Windows inside the window",
 		note("Each one moves, resizes and comes to the front when tapped, inside the area it belongs to."),
-		box(340, 260, windows))
+		box(300, 260, windows))
 
 	// --- Paned ---
 	hpaned := container.NewHPaned(
@@ -70,7 +70,7 @@ func ContainersPage(_ bellui.Window) core.CanvasObject {
 	)
 	panedCard := section("Paned", "Panels with dividers you drag",
 		note("Side by side, in proportion 1 : 2 : 1, and one above the other."),
-		box(340, 110, hpaned), box(340, 180, vpaned))
+		box(300, 110, hpaned), box(300, 180, vpaned))
 
 	// --- Navigation ---
 	var nav *container.Navigation
@@ -82,7 +82,7 @@ func ContainersPage(_ bellui.Window) core.CanvasObject {
 	}
 	nav = container.NewNavigationWithTitle(list, "Cities")
 	navCard := section("Navigation", "Pages pushed and popped",
-		note("Tap a city to push its page; the back arrow pops it."), box(340, 220, nav))
+		note("Tap a city to push its page; the back arrow pops it."), box(300, 220, nav))
 
 	// --- Direction scope ---
 	form := func() core.CanvasObject {

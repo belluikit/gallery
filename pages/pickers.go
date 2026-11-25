@@ -8,6 +8,7 @@ import (
 	"github.com/belluikit/bellui/container"
 	"github.com/belluikit/bellui/core"
 	"github.com/belluikit/bellui/geo"
+	"github.com/belluikit/bellui/theme"
 	"github.com/belluikit/bellui/widget"
 )
 
@@ -75,8 +76,7 @@ func PickersPage(_ bellui.Window) core.CanvasObject {
 	dateStatus := widget.NewLabel("Date: " + now.Format("Mon, Jan 2, 2006"))
 	date := widget.NewDatePicker(now, func(t time.Time) { dateStatus.SetText("Date: " + t.Format("Mon, Jan 2, 2006")) })
 	disableables = append(disableables, date)
-	dateCard := widget.NewCard("Date Picker", "A month's calendar, in place", container.NewVBox(container.NewHBox(date), dateStatus))
-	dateCard.Style = widget.CardStyleOutlined
+	dateSection := uncarded("Date Picker", "A month's calendar, in place.", container.NewHBox(date), dateStatus)
 
 	// --- Time pickers ---
 	timeStatus := widget.NewLabel("")
@@ -110,8 +110,7 @@ func PickersPage(_ bellui.Window) core.CanvasObject {
 	dtStatus := widget.NewLabel("Date and time: " + now.Format("Jan 2, 2006 15:04"))
 	dt := widget.NewAutoDateTimePicker(now, func(t time.Time) { dtStatus.SetText("Date and time: " + t.Format("Jan 2, 2006 15:04")) })
 	disableables = append(disableables, dt)
-	dtCard := widget.NewCard("Date & Time Picker", "Two tabs, in place", container.NewVBox(container.NewHBox(dt), dtStatus))
-	dtCard.Style = widget.CardStyleOutlined
+	dtSection := uncarded("Date & Time Picker", "Two tabs, in place.", container.NewHBox(dt), dtStatus)
 
 	// --- Entries ---
 	dateEntryStatus := widget.NewLabel("Type a date, or open the calendar")
@@ -137,7 +136,18 @@ func PickersPage(_ bellui.Window) core.CanvasObject {
 		}
 	})
 
-	return container.NewVBox(disable, wheelCard, dateCard, timeCard, dtCard, entryCard)
+	return container.NewVBox(disable, wheelCard, dateSection, timeCard, dtSection, entryCard)
+}
+
+// uncarded is a section headed like a card but without one. The date picker
+// (328 dp) and the date-and-time picker (344 dp) are too wide for a card's
+// 30 dp on a 360 dp phone, where a page has 348 dp (gallery#48).
+func uncarded(title, explanation string, content ...core.CanvasObject) core.CanvasObject {
+	head := []core.CanvasObject{
+		widget.NewLabelWithStyle(title, bellui.TextAlignLeading, theme.TypographyTitleMedium),
+		note(explanation),
+	}
+	return container.NewVBox(append(head, content...)...)
 }
 
 // note is an explanation that wraps to the page's width, so a page fits a
