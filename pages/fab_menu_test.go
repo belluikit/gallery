@@ -29,7 +29,7 @@ func TestFABMenuOpensAtTheFABsTrailingEdge(t *testing.T) {
 			w := test.NewTempWindow(t, nil)
 			page := pages.GesturesPage(w)
 			w.SetContent(page)
-			w.Resize(geo.NewSize(412, page.MinSize().Height))
+			w.Resize(geo.NewSize(phoneWidth, page.MinSize().Height))
 
 			var fab *widget.FAB
 			walk(page, func(o core.CanvasObject) {

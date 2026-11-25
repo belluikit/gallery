@@ -69,9 +69,9 @@ func ChoicePage(_ bellui.Window) core.CanvasObject {
 	// --- Check groups ---
 	vertical := widget.NewCheckGroup([]string{"Email", "SMS", "Push notifications"}, nil)
 	vertical.SetSelected([]string{"Email"})
-	horizontal := widget.NewCheckGroup([]string{"Mon", "Tue", "Wed", "Thu", "Fri"}, nil)
+	horizontal := widget.NewCheckGroup([]string{"Mo", "Tu", "We", "Th", "Fr"}, nil)
 	horizontal.Horizontal = true
-	horizontal.SetSelected([]string{"Mon", "Wed", "Fri"})
+	horizontal.SetSelected([]string{"Mo", "We", "Fr"})
 	required := widget.NewCheckGroup([]string{"Terms of service", "Privacy policy"}, nil)
 	required.Required = true
 	required.SetSelected([]string{"Terms of service"})
