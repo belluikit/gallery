@@ -4,7 +4,6 @@ import (
 	"github.com/belluikit/bellui"
 	"github.com/belluikit/bellui/container"
 	"github.com/belluikit/bellui/core"
-	"github.com/belluikit/bellui/geo"
 	"github.com/belluikit/bellui/theme"
 	"github.com/belluikit/bellui/widget"
 )
@@ -86,8 +85,14 @@ func ContainmentPage(w bellui.Window) core.CanvasObject {
 			obj.(*widget.Label).SetText(data[id])
 		},
 	)
-	list.Resize(geo.NewSize(300, 200))
-	listCard := widget.NewCard("Lists", "Scrollable item list", list)
+	// Inside the page's VBox the list gets its minimum height, one row, so
+	// give it the height of all its rows: each row is a label, with the
+	// theme's padding between rows, as the list lays them out (gallery#61).
+	rowHeight := widget.NewLabel("").MinSize().Height
+	padding := theme.Padding()
+	rows := float32(len(data))
+	listCard := widget.NewCard("Lists", "Scrollable item list",
+		pageMinSize(0, rows*(rowHeight+padding)-padding, list))
 	listCard.Style = widget.CardStyleOutlined
 
 	// --- TreeView (left rail) ---
