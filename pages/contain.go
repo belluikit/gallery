@@ -18,8 +18,16 @@ func ContainmentPage(w bellui.Window) core.CanvasObject {
 	outlined := widget.NewCard("Outlined Card", "Border, no shadow", widget.NewLabel("CardStyleOutlined"))
 	outlined.Style = widget.CardStyleOutlined
 
+	// On a phone the page stacks: the card styles in one column, and the
+	// TreeView above the cards instead of beside them. Side by side the
+	// page was 840 dp wide (gallery#51).
+	phone := bellui.CurrentDevice().IsMobile()
+	styleColumns := 3
+	if phone {
+		styleColumns = 1
+	}
 	cardsCard := widget.NewCard("Cards", "3 MD3 card styles", container.NewGridWithColumns(
-		3,
+		styleColumns,
 		elevated, filled, outlined,
 	))
 	cardsCard.Style = widget.CardStyleOutlined
@@ -91,6 +99,11 @@ func ContainmentPage(w bellui.Window) core.CanvasObject {
 	treeRail := container.NewBorder(treeHeader, nil, nil, nil, tv)
 
 	cards := container.NewVBox(cardsCard, carouselCard, bottomSheetCard, sideSheetCard, dividerCard, listCard)
+	if phone {
+		// The page scrolls, so the tree gets a height of its own rather
+		// than its one-row minimum.
+		return container.NewVBox(pageMinSize(0, 400, treeRail), cards)
+	}
 	split := container.NewHSplit(treeRail, cards)
 	split.SetOffset(0.25)
 	return split

@@ -33,6 +33,11 @@ func TestPagesFitAPhone(t *testing.T) {
 		"Gestures":   pages.GesturesPage,
 		"Structure":  pages.StructurePage,
 		"Containers": pages.ContainersPage,
+		// Older pages, fitted for gallery#51.
+		"File Transfer": pages.UploaderPage,
+		"Communication": pages.CommunicationPage,
+		"Theme":         pages.ThemePage,
+		"Typography":    pages.TypographyPage,
 	} {
 		if got := container.NewPadded(page(w)).MinSize().Width; got > phoneWidth {
 			t.Errorf("%s page needs %.0f dp with its padding, more than a phone's %d", name, got, phoneWidth)

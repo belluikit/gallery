@@ -5,6 +5,7 @@ import (
 	"github.com/belluikit/bellui/container"
 	"github.com/belluikit/bellui/core"
 	"github.com/belluikit/bellui/dialog"
+	"github.com/belluikit/bellui/layout"
 	"github.com/belluikit/bellui/theme"
 	"github.com/belluikit/bellui/widget"
 )
@@ -61,10 +62,14 @@ func CommunicationPage(w bellui.Window) core.CanvasObject {
 	loadCircle := widget.NewLoadingIndicator(widget.LoadingShapeCircle)
 	loadText := widget.NewLoadingIndicator(widget.LoadingShapeText)
 
-	loadCard := widget.NewCard("Loading Indicators", "Skeleton placeholders", container.NewHBox(
-		container.NewVBox(widget.NewLabel("Card"), loadRect),
-		container.NewVBox(widget.NewLabel("Avatar"), loadCircle),
-		container.NewVBox(widget.NewLabel("Text"), loadText),
+	// The card placeholder sits above an avatar and a line of text, the way
+	// a list item loads. Side by side the three were 472 dp, more than a
+	// phone has (gallery#51).
+	loadCard := widget.NewCard("Loading Indicators", "Skeleton placeholders", container.NewVBox(
+		widget.NewLabel("Card"),
+		container.NewHBox(loadRect),
+		widget.NewLabel("Avatar and text"),
+		container.NewHBox(loadCircle, container.NewVBox(layout.NewSpacer(), loadText, layout.NewSpacer())),
 	))
 	loadCard.Style = widget.CardStyleOutlined
 
