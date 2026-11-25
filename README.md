@@ -18,7 +18,9 @@ go run .
 ```
 
 The top app bar has toggles for light/dark, dense theme, right-to-left layout
-and an About box. On desktop the Bellui dev inspector is enabled.
+and an About box. On desktop, F12 toggles Bellui's layout inspector
+overlay, and Developer > Widget Inspector opens the widget-tree inspector in a
+window of its own.
 
 ### In a browser
 
@@ -44,23 +46,28 @@ alternative and other details.
 ## Pages and platforms
 
 `main.go` registers the core pages, which build on every platform including
-Android and the web; among them the DAG Editor (`x/dag`). Three more pages are
+Android and the web; among them the DAG Editor (`x/dag`). Five more pages are
 appended by `pages.NativePages()`:
 
 | Page | Desktop | Android | Web |
 | --- | --- | --- | --- |
 | Clair | yes | no | no |
 | Code Assistant | yes | no | no |
+| Camera (`x/mmedia`, FFmpeg) | yes | no | no |
 | Media Player (`x/mmedia`, FFmpeg) | yes | no | no |
+| Video Player (`x/mmedia`, FFmpeg) | yes | no | no |
 
 The selection is done by build tags: `pages/native_desktop.go`,
-`pages/clair_demo.go`, `pages/code_assistant.go` and `pages/media_player.go`
-carry `//go:build !android && !js`, and `pages/native_mobile.go`
+`pages/clair_demo.go`, `pages/code_assistant.go`, `pages/camera.go`,
+`pages/media_player.go` and `pages/video_player.go` carry
+`//go:build !android && !js`, and `pages/native_mobile.go`
 (`//go:build android || js`) returns no extra pages. Clair and the Code
 Assistant keep their knowledge base in bleve, whose storage (bbolt, mmap-go) does not build for
-js/wasm; the Media Player links FFmpeg through goffmpeg (cgo). It plays a
-bundled six-second test video (`pages/media/sample.mp4`, made for the gallery)
-or any local file opened with "Open file…".
+js/wasm; the three `x/mmedia` pages link FFmpeg through goffmpeg (cgo). The
+Media Player plays a bundled six-second test video (`pages/media/sample.mp4`,
+made for the gallery) with subtitles from `pages/media/sample.vtt`, or any
+local file opened with "Open file…". The Video Player shows the same video in
+the bare video widget, with Play, Pause and Stop buttons of the page's own.
 
 Some pages need something outside the app to do anything useful:
 
@@ -69,6 +76,10 @@ Some pages need something outside the app to do anything useful:
 - **File Transfer** talks to an uploader server (default `localhost:9090`).
 - **Clair** builds a search index of Bellui's widget package in the system
   temp directory on first use.
+- **Camera** needs a camera. Building the page opens none. On Linux and
+  Windows the picker lists the cameras at once. On macOS, which can't list
+  them, a Scan button opens each camera in turn, and macOS asks for the camera
+  permission the first time.
 
 ## Android
 
