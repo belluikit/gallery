@@ -39,13 +39,14 @@ func ThemePage(_ bellui.Window) core.CanvasObject {
 		showSelection(s)
 	}
 
-	selectorCard := widget.NewCard("Theme Selector",
-		"System / Light / Dark variant and primary color, applied live",
-		container.NewVBox(sel, status))
+	selectorCard := widget.NewCard("Theme Selector", "Variant and primary color",
+		container.NewVBox(
+			note("System, Light or Dark, and a primary color, applied to the app as you pick them."),
+			sel, status))
 
 	persistCard := widget.NewCard("Per-app persistence",
 		"Stored in the gallery's own Preferences",
-		widget.NewLabel("Pick a variant and color, then relaunch — the gallery restores your\n"+
+		note("Pick a variant and color, then relaunch — the gallery restores your "+
 			"appearance at startup without touching the system-wide Bellui settings."))
 
 	overrideCard := widget.NewCard("Theme Override", "One part of the window, another theme",
