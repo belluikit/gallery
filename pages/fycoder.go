@@ -348,7 +348,11 @@ func FycoderPage(_ bellui.Window) core.CanvasObject {
 		editor.DiagnosticGutter(),
 		bpGutter,
 	)
-	editor.Decorators = []xeditor.RowDecorator{currentLine}
+	// Row-level search highlight (gallery#47): the rows that contain the text
+	// typed in the toolbar's field get a background. The find bar (Cmd+F)
+	// highlights the matches themselves; this marks whole rows.
+	markedRows := xeditor.NewSearchHighlightDecorator()
+	editor.Decorators = []xeditor.RowDecorator{currentLine, markedRows}
 
 	// Phase 3 diagnostics: squiggles + severity-shaped gutter markers + hover.
 	// Click a marker to reveal its diagnostic; repeated clicks cycle a line's
@@ -407,7 +411,33 @@ func FycoderPage(_ bellui.Window) core.CanvasObject {
 		statusLabel.SetText("Saved (demo — no actual file written)")
 	}
 
+	markEntry := widget.NewEntry()
+	markEntry.SetPlaceHolder("Mark rows containing…")
+	markCount := widget.NewLabel("")
+	markRows := func() {
+		rows := map[int]bool{}
+		if q := markEntry.Text; q != "" {
+			for i, line := range strings.Split(editor.Text(), "\n") {
+				if strings.Contains(line, q) {
+					rows[i+1] = true // the decorator's lines are 1-based
+				}
+			}
+		}
+		markedRows.Rows = rows
+		editor.RefreshDecorators()
+		switch {
+		case markEntry.Text == "":
+			markCount.SetText("")
+		case len(rows) == 1:
+			markCount.SetText("1 row")
+		default:
+			markCount.SetText(fmt.Sprintf("%d rows", len(rows)))
+		}
+	}
+	markEntry.OnChanged = func(string) { markRows() }
+
 	editor.OnChanged = func(s string) {
+		markRows()
 		if s == cleanText {
 			statusLabel.SetText("Ready")
 		} else {
@@ -471,9 +501,12 @@ func FycoderPage(_ bellui.Window) core.CanvasObject {
 			statusLabel.SetText(fmt.Sprintf("%d lines — folded, viewport-windowed", bigLines))
 		}
 		showingBig = !showingBig
+		markRows() // the marked rows are the new text's
 	})
 
-	toolbar := container.NewHBox(foldAllBtn, unfoldAllBtn, widget.NewSeparator(), bigBtn)
+	toolbar := container.NewBorder(nil, nil,
+		container.NewHBox(foldAllBtn, unfoldAllBtn, widget.NewSeparator(), bigBtn, widget.NewSeparator()),
+		markCount, markEntry)
 
 	// Status bar layout.
 	statusBar := container.NewHBox(
