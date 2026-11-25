@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/belluikit/bellui"
-	"github.com/belluikit/bellui/canvas"
 	"github.com/belluikit/bellui/container"
 	"github.com/belluikit/bellui/core"
 	"github.com/belluikit/bellui/theme"
@@ -39,23 +38,28 @@ func TypographyPage(_ bellui.Window) core.CanvasObject {
 	}
 
 	th := theme.Current()
-	v := bellui.CurrentApp().Settings().ThemeVariant()
 
 	var rows []core.CanvasObject
 	for _, tok := range tokens {
 		size := th.Size(tok.size)
 
-		// Token name and specs.
+		// The token's name and specs, then a sample in the style itself. One
+		// RichText holds both, so its padding goes round the pair once. The
+		// sample wraps, so one wider than a phone runs onto a second line
+		// instead of making the page scroll sideways; that also shows the
+		// style's line height (gallery#51).
 		specs := fmt.Sprintf("%s — %.0fpx, weight %d", tok.name, size, int(tok.style.ResolvedWeight()))
-		specLabel := canvas.NewText(specs, th.Color(theme.ColorNameOnSurfaceVariant, v))
-		specLabel.TextSize = 11
+		text := widget.NewRichText(
+			&widget.TextSegment{Text: specs, Style: widget.RichTextStyle{
+				SizeName: theme.SizeNameLabelSmall, ColorName: theme.ColorNameOnSurfaceVariant,
+			}},
+			&widget.TextSegment{Text: tok.sample, Style: widget.RichTextStyle{
+				SizeName: tok.size, ColorName: theme.ColorNameOnSurface, TextStyle: tok.style,
+			}},
+		)
+		text.Wrapping = bellui.TextWrapWord
 
-		// Sample text with the actual style applied.
-		sample := canvas.NewText(tok.sample, th.Color(theme.ColorNameOnSurface, v))
-		sample.TextSize = size
-		sample.TextStyle = tok.style
-
-		card := widget.NewCard("", "", container.NewVBox(specLabel, sample))
+		card := widget.NewCard("", "", text)
 		card.Style = widget.CardStyleOutlined
 		rows = append(rows, card)
 	}
