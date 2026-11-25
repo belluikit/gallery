@@ -32,6 +32,7 @@ func TestComponentPagesConstruct(t *testing.T) {
 		"Data Grid":     pages.FytablesPage,
 		"File Transfer": pages.UploaderPage,
 		"Theme":         pages.ThemePage,
+		"Communication": pages.CommunicationPage,
 		"DAG Editor":    pages.DAGEditorPage,
 	}
 
