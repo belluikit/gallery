@@ -9,7 +9,9 @@ import (
 	"github.com/belluikit/bellui/widget"
 )
 
-// CommunicationPage shows Badges, Snackbar, Tooltips, Progress, Loading, Toast.
+// CommunicationPage shows Badges, Snackbar, Tooltips, Progress, Loading,
+// Toast, and the dialogs: the standard ones, the colour picker, and custom
+// dialogs with content of the app's own.
 func CommunicationPage(w bellui.Window) core.CanvasObject {
 	// --- Badges ---
 	dot := widget.NewBadge(widget.NewIconButton(theme.MailComposeIcon(), func() {}))
@@ -105,6 +107,11 @@ func CommunicationPage(w bellui.Window) core.CanvasObject {
 	))
 	dialogCard.Style = widget.CardStyleOutlined
 
+	// --- Colour picker and custom dialogs (gallery#47) ---
+	customCard := widget.NewCard("More Dialogs", "A colour picker, and dialogs with your own content",
+		moreDialogs(w))
+	customCard.Style = widget.CardStyleOutlined
+
 	// --- Toast ---
 	toastCard := widget.NewCard("Toast", "Transient notification", container.NewVBox(
 		widget.NewButton("Show Toast", func() {
@@ -113,5 +120,5 @@ func CommunicationPage(w bellui.Window) core.CanvasObject {
 	))
 	toastCard.Style = widget.CardStyleOutlined
 
-	return container.NewVBox(badgeCard, snackCard, progressCard, loadCard, tooltipCard, dialogCard, toastCard)
+	return container.NewVBox(badgeCard, snackCard, progressCard, loadCard, tooltipCard, dialogCard, customCard, toastCard)
 }
