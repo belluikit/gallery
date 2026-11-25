@@ -13,7 +13,8 @@ import (
 )
 
 // GesturesPage shows SwipeArea (a card swiped away, and a plain swipe
-// detector), ContextMenu and FABMenu (gallery#38).
+// detector), ContextMenu and FABMenu (gallery#38), and the MD3 pressed state
+// on a widget of the gallery's own, built on PressTarget (gallery#49).
 func GesturesPage(w bellui.Window) core.CanvasObject {
 	// --- Swipe card ---
 	cardNo := 1
@@ -100,8 +101,25 @@ func GesturesPage(w bellui.Window) core.CanvasObject {
 	))
 	fabCard.Style = widget.CardStyleOutlined
 
-	disable := widget.NewCheck("Disable the swipe areas and the FAB", func(on bool) {
-		for _, d := range []core.Disableable{swipeCard, plain, fab} {
+	// --- Press state on a widget of your own ---
+	presses := 0
+	pressStatus := widget.NewLabel("Not tapped yet")
+	tile := newPressTile("Play", theme.MediaPlayIcon(), func() {
+		presses++
+		if presses == 1 {
+			pressStatus.SetText("Tapped once")
+		} else {
+			pressStatus.SetText(fmt.Sprintf("Tapped %d times", presses))
+		}
+	})
+	pressCard := widget.NewCard("Press State", "Your own widget, bellui's ripple", container.NewVBox(
+		note("This tile isn't a bellui widget: it embeds widget.PressTarget, which gives it the ripple, timing and colours of bellui's own. Press and hold to see it spread; drag off to cancel."),
+		container.NewGridWrap(geo.NewSize(160, tile.MinSize().Height), tile), pressStatus,
+	))
+	pressCard.Style = widget.CardStyleOutlined
+
+	disable := widget.NewCheck("Disable the swipe areas, the FAB and the tile", func(on bool) {
+		for _, d := range []core.Disableable{swipeCard, plain, fab, tile} {
 			if on {
 				d.Disable()
 			} else {
@@ -110,7 +128,7 @@ func GesturesPage(w bellui.Window) core.CanvasObject {
 		}
 	})
 
-	return container.NewVBox(disable, swipeSection, menuCard, fabCard)
+	return container.NewVBox(disable, swipeSection, menuCard, fabCard, pressCard)
 }
 
 // swipeHint is a framed area with a hint in the middle, for a swipe to
