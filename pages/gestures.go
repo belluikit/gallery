@@ -83,12 +83,16 @@ func GesturesPage(w bellui.Window) core.CanvasObject {
 	})
 	var fab *widget.FAB
 	fab = widget.NewFAB(theme.ContentAddIcon(), func() {
-		// The menu opens up and to the left of the point given (its
-		// bottom-right corner 8 dp above it), so give the FAB's top-right
-		// corner and keep the FAB at the right, where MD3 puts it
-		// (belluikit/bellui#1424).
+		// The menu opens above the FAB's top corner on its trailing side:
+		// the top-right one, opening up and to the left, or in a
+		// right-to-left window the top-left one, opening up and to the
+		// right. The card keeps the FAB at the trailing edge, where MD3
+		// puts it.
 		pos := bellui.CurrentApp().Driver().AbsolutePositionForObject(fab)
-		speedDial.Toggle(w.Canvas(), pos.AddXY(fab.Size().Width, 0))
+		if bellui.CurrentLayoutDirection() != bellui.DirectionRTL {
+			pos = pos.AddXY(fab.Size().Width, 0)
+		}
+		speedDial.Toggle(w.Canvas(), pos)
 	})
 	fabCard := widget.NewCard("FAB Menu", "A speed dial", container.NewVBox(
 		note("The button opens its actions beside it; pick one, or tap the button again to close them."),
