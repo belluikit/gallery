@@ -34,11 +34,16 @@ func UploaderPage(w bellui.Window) core.CanvasObject {
 	statusText.Set("Not connected — start an uploader server and click Connect")
 	statusLabel := widget.NewLabelWithData(statusText)
 	statusLabel.Truncation = bellui.TextTruncateEllipsis
+	// The binding has already drawn the label, so it measures the whole
+	// text until a refresh applies the truncation: 391 dp, more than a
+	// phone has (gallery#51).
+	statusLabel.Refresh()
 
 	fileIDText := binding.NewString()
 	fileIDText.Set("File ID: (none)")
 	fileIDLabel := widget.NewLabelWithData(fileIDText)
 	fileIDLabel.Truncation = bellui.TextTruncateEllipsis
+	fileIDLabel.Refresh()
 
 	progressVal := binding.NewFloat()
 	progressBar := widget.NewProgressBarWithData(progressVal)
