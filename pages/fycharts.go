@@ -787,7 +787,13 @@ func FychartsPage(_ bellui.Window) core.CanvasObject {
 		e := evt.(interact.ZoomChangeEvent)
 		dashedZoom.SetWindow(interact.DataWindow{Start: e.Start, End: e.End})
 	})
-	dashedWithZoom := container.NewBorder(nil, dashedZoom, nil, nil, dashedChart)
+	// On a phone the slider goes below the chart's phoneChartHeight, not
+	// into it, so the chart keeps the height every other chart has.
+	var dashedArea core.CanvasObject = dashedChart
+	if bellui.CurrentDevice().IsMobile() {
+		dashedArea = pageMinSize(0, phoneChartHeight, dashedChart)
+	}
+	dashedWithZoom := container.NewBorder(nil, dashedZoom, nil, nil, dashedArea)
 
 	// 2. Multi-pane chart group — price + volume synchronized
 	priceChart := chart.New(chart.Option{

@@ -46,17 +46,24 @@ func TestChartsZoomSliderDrivesItsChart(t *testing.T) {
 		if !ok {
 			return
 		}
+		// The chart is beside the slider, or on a phone one container
+		// further down, under the minimum height that keeps it 360 tall.
 		var s *component.DataZoomSlider
-		var ch *chart.Chart
 		for _, child := range c.Objects {
-			switch v := child.(type) {
-			case *component.DataZoomSlider:
+			if v, ok := child.(*component.DataZoomSlider); ok {
 				s = v
-			case *chart.Chart:
-				ch = v
 			}
 		}
-		if s != nil && ch != nil {
+		if s == nil {
+			return
+		}
+		var ch *chart.Chart
+		walkPage(c, func(o core.CanvasObject) {
+			if v, ok := o.(*chart.Chart); ok {
+				ch = v
+			}
+		})
+		if ch != nil {
 			slider, driven = s, ch
 		}
 	})
