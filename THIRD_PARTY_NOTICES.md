@@ -53,3 +53,16 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ```
+
+## icons/format-textdirection-*.svg
+
+`icons/format-textdirection-l-to-r.svg` and `icons/format-textdirection-r-to-l.svg`
+(the top bar's layout-direction toggle) are Material Icons'
+`format_textdirection_l_to_r` and `format_textdirection_r_to_l`, from
+[google/material-design-icons](https://github.com/google/material-design-icons)
+(`src/editor/<name>/materialicons/24px.svg`). The only change is that the
+transparent 24×24 bounding-box path was removed.
+
+- **Icons:** Material Icons by Google, licensed under the
+  [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). The full
+  text is in [icons/LICENSE-MaterialIcons.txt](icons/LICENSE-MaterialIcons.txt).

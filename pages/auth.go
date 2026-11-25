@@ -64,7 +64,7 @@ func AuthPage(w bellui.Window) core.CanvasObject {
 	btn.Style = widget.ButtonStyleFilled
 
 	card := widget.NewCard("Authentication", "OIDC/OAuth sign-in with branded provider buttons", container.NewVBox(
-		widget.NewLabel("Click the account icon in the top bar, or:"),
+		widget.NewLabel("Choose Account in the top bar, or:"),
 		btn,
 	))
 	card.Style = widget.CardStyleOutlined

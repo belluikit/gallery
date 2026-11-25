@@ -17,8 +17,9 @@ listed in the Bellui README.
 go run .
 ```
 
-The top app bar has toggles for light/dark, dense theme, right-to-left layout
-and an About box. On desktop, F12 toggles Bellui's layout inspector
+The top app bar has toggles for light/dark, right-to-left layout and dense
+theme, then Account (the sign-in dialog) and an About box. On a narrow screen
+the actions that don't fit go into a ⋮ menu. On desktop, F12 toggles Bellui's layout inspector
 overlay, and Developer > Widget Inspector opens the widget-tree inspector in a
 window of its own.
 
