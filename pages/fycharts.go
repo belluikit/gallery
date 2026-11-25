@@ -747,7 +747,7 @@ func FychartsPage(_ bellui.Window) core.CanvasObject {
 
 	// 1. Dashed line styles — MACD-style indicator overlay with dashed EMA lines
 	dashedChart := chart.New(chart.Option{
-		Title:    &chart.Title{Text: "Dashed Lines", SubText: "MACD-Style Indicators"},
+		Title:    &chart.Title{Text: "Dashed Lines", SubText: "MACD-Style Indicators · Zoom Slider"},
 		Legend:   legend,
 		Tooltip:  &component.TooltipConfig{Trigger: component.TooltipTriggerAxis, Crosshair: component.CrosshairVertical},
 		DataZoom: &interact.ZoomConfig{Enabled: true, MinSpan: 0.1, MaxSpan: 1.0, ZoomSensitivity: 0.1},
@@ -777,6 +777,23 @@ func FychartsPage(_ bellui.Window) core.CanvasObject {
 		},
 		Animation: true,
 	})
+
+	// The dashed chart's zoom as a slider under it (gallery#47): drag a
+	// handle to narrow the window, or the window itself to pan it. The chart
+	// moves the slider back when it is zoomed some other way, by the wheel or
+	// a pinch. SetZoomWindow fires no zoom event, so the two can't echo.
+	dashedZoom := component.NewDataZoomSlider(dashedChart.SetZoomWindow)
+	dashedChart.Events.On(interact.EventZoomChange, func(evt interface{}) {
+		e := evt.(interact.ZoomChangeEvent)
+		dashedZoom.SetWindow(interact.DataWindow{Start: e.Start, End: e.End})
+	})
+	// On a phone the slider goes below the chart's phoneChartHeight, not
+	// into it, so the chart keeps the height every other chart has.
+	var dashedArea core.CanvasObject = dashedChart
+	if bellui.CurrentDevice().IsMobile() {
+		dashedArea = pageMinSize(0, phoneChartHeight, dashedChart)
+	}
+	dashedWithZoom := container.NewBorder(nil, dashedZoom, nil, nil, dashedArea)
 
 	// 2. Multi-pane chart group — price + volume synchronized
 	priceChart := chart.New(chart.Option{
@@ -975,7 +992,7 @@ func FychartsPage(_ bellui.Window) core.CanvasObject {
 		container.NewTabItem("Advanced", charts(pictorialChart, effectChart, customChart, builderChart)),
 		container.NewTabItem("Drilldown", drilldown),
 		container.NewTabItem("3D", charts(bar3DChart, scatter3DChart, surfaceChart, line3DChart)),
-		container.NewTabItem("Trading", charts(dashedChart, chartGroup, streamChart, drawChartWithTools)),
+		container.NewTabItem("Trading", charts(dashedWithZoom, chartGroup, streamChart, drawChartWithTools)),
 		container.NewTabItem("Geo",
 			container.NewBorder(
 				container.NewBorder(
