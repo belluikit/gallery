@@ -78,6 +78,7 @@ func main() {
 	if !isMobile {
 		w.Resize(geo.NewSize(900, 650))
 		dev.Enable(w)
+		addDeveloperMenu(w) // Developer > Widget Inspector, desktop only
 	}
 
 	// The drawer and content are both driven off this single slice.
