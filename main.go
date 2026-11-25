@@ -139,87 +139,9 @@ func main() {
 	})
 
 	// TopAppBar with hamburger menu and theme actions.
-	appBar = widget.NewTopAppBar(registry[current].Name, theme.MenuIcon(), func() {
+	appBar = newAppBar(a, w, registry[current].Name, func() {
 		onUI(func() { drawer.Toggle(w.Canvas()) })
-	})
-
-	isDense := false
-	isRTL := false
-	// Chromatic in dark mode ("switch to light"), achromatic in light —
-	// seeded from the current variant since a stored Theme-page selection
-	// may already have applied light mode.
-	variantIcon := theme.ColorChromaticIcon()
-	if a.Settings().ThemeVariant() == theme.VariantLight {
-		variantIcon = theme.ColorAchromaticIcon()
-	}
-	appBar.Actions = []widget.TopAppBarAction{
-		{
-			Icon: theme.AccountIcon(),
-			OnTapped: func() {
-				onUI(func() { pages.ShowAuthDialog(w) })
-			},
-		},
-		{
-			Icon: variantIcon,
-			OnTapped: func() {
-				onUI(func() {
-					if a.Settings().ThemeVariant() == theme.VariantDark {
-						a.Settings().SetThemeVariant(theme.VariantLight)
-						appBar.Actions[1].Icon = theme.ColorAchromaticIcon()
-					} else {
-						a.Settings().SetThemeVariant(theme.VariantDark)
-						appBar.Actions[1].Icon = theme.ColorChromaticIcon()
-					}
-					appBar.Refresh()
-					rebuild()
-				})
-			},
-		},
-		{
-			Icon: theme.GridIcon(),
-			OnTapped: func() {
-				onUI(func() {
-					isDense = !isDense
-					if isDense {
-						a.Settings().SetTheme(theme.DenseTheme())
-					} else {
-						a.Settings().SetTheme(theme.DefaultTheme())
-					}
-					rebuild()
-				})
-			},
-		},
-		{
-			// Toggle the process-wide layout direction to preview the whole
-			// gallery right-to-left. SetLayoutDirection re-lays-out and repaints
-			// the running window (mirroring containers, alignment, scroll, focus
-			// order and directional icons); rebuild() refreshes the current page
-			// to match. MoreHorizontal (LTR) / MoreVertical (RTL) flag the state.
-			Icon: theme.MoreHorizontalIcon(),
-			OnTapped: func() {
-				onUI(func() {
-					isRTL = !isRTL
-					if isRTL {
-						bellui.SetLayoutDirection(bellui.DirectionRTL)
-						appBar.Actions[3].Icon = theme.MoreVerticalIcon()
-					} else {
-						bellui.SetLayoutDirection(bellui.DirectionLTR)
-						appBar.Actions[3].Icon = theme.MoreHorizontalIcon()
-					}
-					appBar.Refresh()
-					rebuild()
-				})
-			},
-		},
-		{
-			// dialog.About (fyne #446/#453): MD3-native about box built from the
-			// app metadata, with the parallax icon underlay behind the content.
-			Icon: theme.InfoIcon(),
-			OnTapped: func() {
-				onUI(func() { showAbout(a, w) })
-			},
-		},
-	}
+	}, rebuild)
 
 	body := container.NewBorder(appBar, nil, nil, nil, pageSlot)
 
