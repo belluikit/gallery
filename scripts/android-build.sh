@@ -37,10 +37,16 @@ STAGE="$(mktemp -d)"
 unzip -oq "$APK" -d "$STAGE"
 rm -rf "$STAGE/META-INF"
 rm -f /tmp/gallery-repack.apk /tmp/gallery-aligned.apk
+# The manifest sets extractNativeLibs="false", so Android loads the .so files
+# straight from the APK: they must be stored uncompressed, and zipalign -p
+# page-aligns them. Deflated, Android 15 refuses the APK with "Failed to
+# extract native libraries" (gallery#63).
 ( cd "$STAGE"
   zip -0 -X -q /tmp/gallery-repack.apk resources.arsc
-  zip -rg -X -q /tmp/gallery-repack.apk . -x resources.arsc )
+  zip -0 -r -X -q /tmp/gallery-repack.apk lib
+  zip -rg -X -q /tmp/gallery-repack.apk . -x resources.arsc 'lib/*' )
 "$BT/zipalign" -p -f 4 /tmp/gallery-repack.apk /tmp/gallery-aligned.apk
+"$BT/zipalign" -c -p 4 /tmp/gallery-aligned.apk
 "$BT/apksigner" sign \
   --ks "$HOME/.android/debug.keystore" --ks-pass pass:android \
   --ks-key-alias androiddebugkey --key-pass pass:android \
